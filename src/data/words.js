@@ -52,21 +52,23 @@ export const wordPairs = [
 ];
 
 // ランダム選択用ヘルパー関数
-export const getRandomWordPair = (excludeIds = []) => {
-  const available = wordPairs.filter(pair => !excludeIds.includes(pair.id));
+export const getRandomWordPair = (excludeIds = [], customWords = null) => {
+  const source = customWords || wordPairs;
+  const available = source.filter(pair => !excludeIds.includes(pair.id));
   if (available.length === 0) {
-    return wordPairs[Math.floor(Math.random() * wordPairs.length)];
+    return source[Math.floor(Math.random() * source.length)];
   }
   return available[Math.floor(Math.random() * available.length)];
 };
 
 // 難易度別フィルタリング
-export const getRandomWordPairByDifficulty = (difficulty = "easy", excludeIds = []) => {
-  const filtered = wordPairs.filter(
+export const getRandomWordPairByDifficulty = (difficulty = "easy", excludeIds = [], customWords = null) => {
+  const source = customWords || wordPairs;
+  const filtered = source.filter(
     pair => pair.difficulty === difficulty && !excludeIds.includes(pair.id)
   );
   if (filtered.length === 0) {
-    return getRandomWordPair(excludeIds);
+    return getRandomWordPair(excludeIds, customWords);
   }
   return filtered[Math.floor(Math.random() * filtered.length)];
 };

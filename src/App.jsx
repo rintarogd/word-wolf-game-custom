@@ -1,17 +1,20 @@
-import { useState, useCallback } from 'react';
+import { useState, useCallback, useEffect } from 'react';
 import Setup from './components/Setup';
 import WordDisplay from './components/WordDisplay';
 import Discussion from './components/Discussion';
 import Vote from './components/Vote';
 import Result from './components/Result';
+import WordManager from './components/WordManager';
 import { getRandomWordPairByDifficulty } from './data/words';
+import { getCustomWords } from './utils/wordStorage';
 
 const GAME_PHASES = {
   SETUP: 'setup',
   WORD_VIEWING: 'word_viewing',
   DISCUSSION: 'discussion',
   VOTING: 'voting',
-  RESULT: 'result'
+  RESULT: 'result',
+  WORD_MANAGER: 'word_manager'
 };
 
 function App() {
@@ -29,6 +32,16 @@ function App() {
     discussionTime: 300,
     usedWordIds: []
   });
+
+  const [customWords, setCustomWords] = useState(null);
+
+  // カスタムお題をロード
+  useEffect(() => {
+    const loaded = getCustomWords();
+    if (loaded) {
+      setCustomWords(loaded);
+    }
+  }, []);
 
   // ゲーム開始
   const startGame = useCallback((playerCount, wolfCount, difficulty) => {
@@ -52,8 +65,8 @@ function App() {
       players[shuffled[i]].isWolf = true;
     }
 
-    // お題を選択
-    const wordPair = getRandomWordPairByDifficulty(difficulty, gameState.usedWordIds);
+    // お題を選択（カスタムお題がある場合はそちらを使用）
+    const wordPair = getRandomWordPairByDifficulty(difficulty, gameState.usedWordIds, customWords);
 
     setGameState(prev => ({
       ...prev,
@@ -69,7 +82,7 @@ function App() {
       votes: {},
       usedWordIds: [...prev.usedWordIds, wordPair.id]
     }));
-  }, [gameState.usedWordIds]);
+  }, [gameState.usedWordIds, customWords]);
 
   // 次のプレイヤーへ
   const nextPlayer = useCallback(() => {
@@ -172,10 +185,33 @@ function App() {
     });
   }, [gameState.usedWordIds]);
 
+  // お題管理画面へ
+  const openWordManager = useCallback(() => {
+    setGameState(prev => ({
+      ...prev,
+      phase: GAME_PHASES.WORD_MANAGER
+    }));
+  }, []);
+
+  // お題管理から戻る
+  const closeWordManager = useCallback(() => {
+    setGameState(prev => ({
+      ...prev,
+      phase: GAME_PHASES.SETUP
+    }));
+    // カスタムお題を再ロード
+    const loaded = getCustomWords();
+    setCustomWords(loaded);
+  }, []);
+
   return (
     <div className="min-h-screen bg-gray-100">
       {gameState.phase === GAME_PHASES.SETUP && (
-        <Setup onStart={startGame} />
+        <Setup onStart={startGame} onManageWords={openWordManager} />
+      )}
+
+      {gameState.phase === GAME_PHASES.WORD_MANAGER && (
+        <WordManager onClose={closeWordManager} />
       )}
 
       {gameState.phase === GAME_PHASES.WORD_VIEWING && (
