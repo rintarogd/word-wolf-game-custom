@@ -1,6 +1,6 @@
 import { useState } from 'react';
 
-const Setup = ({ onStart }) => {
+const Setup = ({ onStart, onManageWords }) => {
   const [playerCount, setPlayerCount] = useState(3);
   const [wolfCount, setWolfCount] = useState(1);
   const [difficulty, setDifficulty] = useState('easy');
@@ -151,6 +151,14 @@ const Setup = ({ onStart }) => {
             className="w-full bg-gradient-to-r from-blue-500 to-purple-600 text-white font-bold py-4 px-6 rounded-lg hover:from-blue-600 hover:to-purple-700 transition-all transform hover:scale-105 shadow-lg text-lg"
           >
             ゲーム開始
+          </button>
+
+          {/* お題管理ボタン */}
+          <button
+            onClick={onManageWords}
+            className="w-full bg-gray-200 text-gray-700 font-medium py-3 px-6 rounded-lg hover:bg-gray-300 transition-all"
+          >
+            ⚙️ お題を管理
           </button>
         </div>
 
