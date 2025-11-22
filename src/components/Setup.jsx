@@ -68,6 +68,14 @@ const Setup = ({ onStart, onManageWords }) => {
     setError('');
   };
 
+  // プレイヤー名をすべてクリア
+  const clearAllNames = () => {
+    if (confirm('すべてのプレイヤー名をデフォルトに戻しますか？')) {
+      const defaultNames = Array.from({ length: 8 }, (_, i) => `プレイヤー${i + 1}`);
+      setPlayerNames(defaultNames);
+    }
+  };
+
   return (
     <div className="min-h-screen bg-gradient-to-br from-blue-500 to-purple-600 flex items-center justify-center p-4">
       <div className="bg-white rounded-lg shadow-2xl p-8 max-w-md w-full">
@@ -231,9 +239,17 @@ const Setup = ({ onStart, onManageWords }) => {
               </button>
             </div>
 
-            <p className="text-sm text-gray-600 mb-6">
-              最大8人分のプレイヤー名を設定できます。設定した名前は次回以降も使用されます。
-            </p>
+            <div className="flex items-center justify-between mb-6">
+              <p className="text-sm text-gray-600">
+                最大8人分のプレイヤー名を設定できます。設定した名前は次回以降も使用されます。
+              </p>
+              <button
+                onClick={clearAllNames}
+                className="text-sm text-red-600 hover:text-red-700 font-medium whitespace-nowrap ml-4"
+              >
+                すべてクリア
+              </button>
+            </div>
 
             <div className="space-y-3 max-h-[60vh] overflow-y-auto mb-6">
               {playerNames.map((name, index) => (
