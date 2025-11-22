@@ -5,6 +5,7 @@ import Discussion from './components/Discussion';
 import Vote from './components/Vote';
 import Result from './components/Result';
 import WordManager from './components/WordManager';
+import JSONUpload from './components/JSONUpload';
 import { getRandomWordPairByDifficulty } from './data/words';
 import { getCustomWords } from './utils/wordStorage';
 
@@ -14,7 +15,8 @@ const GAME_PHASES = {
   DISCUSSION: 'discussion',
   VOTING: 'voting',
   RESULT: 'result',
-  WORD_MANAGER: 'word_manager'
+  WORD_MANAGER: 'word_manager',
+  JSON_UPLOAD: 'json_upload'
 };
 
 function App() {
@@ -204,6 +206,25 @@ function App() {
     setCustomWords(loaded);
   }, []);
 
+  // JSONアップロード画面へ
+  const openJSONUpload = useCallback(() => {
+    setGameState(prev => ({
+      ...prev,
+      phase: GAME_PHASES.JSON_UPLOAD
+    }));
+  }, []);
+
+  // JSONアップロードから戻る
+  const closeJSONUpload = useCallback(() => {
+    setGameState(prev => ({
+      ...prev,
+      phase: GAME_PHASES.WORD_MANAGER
+    }));
+    // カスタムお題を再ロード
+    const loaded = getCustomWords();
+    setCustomWords(loaded);
+  }, []);
+
   return (
     <div className="min-h-screen bg-gray-100">
       {gameState.phase === GAME_PHASES.SETUP && (
@@ -211,7 +232,11 @@ function App() {
       )}
 
       {gameState.phase === GAME_PHASES.WORD_MANAGER && (
-        <WordManager onClose={closeWordManager} />
+        <WordManager onClose={closeWordManager} onOpenJSONUpload={openJSONUpload} />
+      )}
+
+      {gameState.phase === GAME_PHASES.JSON_UPLOAD && (
+        <JSONUpload onBack={closeJSONUpload} />
       )}
 
       {gameState.phase === GAME_PHASES.WORD_VIEWING && (

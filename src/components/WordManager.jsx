@@ -1,19 +1,16 @@
-import { useState, useRef } from 'react';
+import { useState } from 'react';
 import {
   getCustomWords,
   saveCustomWords,
   clearCustomWords,
-  validateWordPairs,
-  generateSampleJSON,
   downloadJSON
 } from '../utils/wordStorage';
 import { wordPairs as defaultWords } from '../data/words';
 
-const WordManager = ({ onClose }) => {
+const WordManager = ({ onClose, onOpenJSONUpload }) => {
   const [customWords, setCustomWords] = useState(getCustomWords());
   const [error, setError] = useState('');
   const [success, setSuccess] = useState('');
-  const fileInputRef = useRef(null);
   const [showForm, setShowForm] = useState(false);
   const [formData, setFormData] = useState({
     majority: '',
@@ -21,37 +18,6 @@ const WordManager = ({ onClose }) => {
     category: '',
     difficulty: 'easy'
   });
-
-  // ファイルアップロード
-  const handleFileUpload = (event) => {
-    const file = event.target.files[0];
-    if (!file) return;
-
-    const reader = new FileReader();
-    reader.onload = (e) => {
-      try {
-        const data = JSON.parse(e.target.result);
-        const validation = validateWordPairs(data);
-
-        if (!validation.valid) {
-          setError(validation.error);
-          setSuccess('');
-          return;
-        }
-
-        setCustomWords(data);
-        saveCustomWords(data);
-        setSuccess(`${data.length}個のお題を読み込みました！`);
-        setError('');
-      } catch (err) {
-        setError('JSONファイルの形式が正しくありません');
-        setSuccess('');
-      }
-    };
-
-    reader.readAsText(file);
-    event.target.value = '';
-  };
 
   // デフォルトに戻す
   const handleResetToDefault = () => {
@@ -87,13 +53,6 @@ const WordManager = ({ onClose }) => {
     setError('');
     setFormData({ majority: '', minority: '', category: '', difficulty: 'easy' });
     setShowForm(false);
-  };
-
-  // サンプルJSONをダウンロード
-  const handleDownloadSample = () => {
-    const sample = generateSampleJSON();
-    downloadJSON(sample, 'sample-word-pairs.json');
-    setSuccess('サンプルファイルをダウンロードしました');
   };
 
   // 現在のお題をダウンロード
@@ -243,43 +202,31 @@ const WordManager = ({ onClose }) => {
           </div>
 
           {/* JSONファイルアップロード */}
-          <div className="border-2 border-gray-200 rounded-lg p-6">
-            <h3 className="font-bold text-gray-800 mb-2">JSONファイルから読み込み</h3>
+          <div className="border-2 border-blue-200 rounded-lg p-6">
+            <h3 className="font-bold text-gray-800 mb-2">📁 JSONファイルから読み込み</h3>
             <p className="text-sm text-gray-600 mb-4">
-              お題が記載されたJSONファイルをアップロードしてください
+              複数のお題を一度に登録したい場合は、JSONファイルを使用できます
             </p>
-            <input
-              ref={fileInputRef}
-              type="file"
-              accept=".json"
-              onChange={handleFileUpload}
-              className="hidden"
-            />
             <button
-              onClick={() => fileInputRef.current?.click()}
-              className="w-full bg-gradient-to-r from-blue-500 to-indigo-600 text-white font-bold py-3 px-6 rounded-lg hover:from-blue-600 hover:to-indigo-700 transition-all transform hover:scale-105 shadow-lg"
+              onClick={onOpenJSONUpload}
+              className="w-full bg-gradient-to-r from-blue-500 to-cyan-600 text-white font-bold py-3 px-6 rounded-lg hover:from-blue-600 hover:to-cyan-700 transition-all transform hover:scale-105 shadow-lg"
             >
-              📁 JSONファイルを選択
+              JSONアップロード画面へ →
             </button>
           </div>
 
           {/* ダウンロード */}
           <div className="border-2 border-gray-200 rounded-lg p-6">
             <h3 className="font-bold text-gray-800 mb-2">お題をダウンロード</h3>
-            <div className="grid grid-cols-2 gap-3">
-              <button
-                onClick={handleDownloadSample}
-                className="bg-gray-200 text-gray-700 font-medium py-3 px-4 rounded-lg hover:bg-gray-300 transition-colors"
-              >
-                📝 サンプル
-              </button>
-              <button
-                onClick={handleDownloadCurrent}
-                className="bg-gray-200 text-gray-700 font-medium py-3 px-4 rounded-lg hover:bg-gray-300 transition-colors"
-              >
-                💾 現在のお題
-              </button>
-            </div>
+            <p className="text-sm text-gray-600 mb-4">
+              現在のお題をJSONファイルとしてダウンロードできます
+            </p>
+            <button
+              onClick={handleDownloadCurrent}
+              className="w-full bg-gray-200 text-gray-700 font-medium py-3 px-4 rounded-lg hover:bg-gray-300 transition-colors"
+            >
+              💾 現在のお題をダウンロード
+            </button>
           </div>
 
           {/* デフォルトに戻す */}
@@ -297,26 +244,6 @@ const WordManager = ({ onClose }) => {
               </button>
             </div>
           )}
-        </div>
-
-        {/* JSON形式の説明 */}
-        <div className="mt-8 pt-6 border-t border-gray-200">
-          <h3 className="font-bold text-gray-800 mb-2">JSONファイルの形式</h3>
-          <pre className="bg-gray-100 p-4 rounded-lg text-xs overflow-x-auto">
-{`[
-  {
-    "id": 1,
-    "majority": "りんご",
-    "minority": "なし",
-    "category": "果物",
-    "difficulty": "easy"
-  },
-  ...
-]`}
-          </pre>
-          <p className="text-xs text-gray-600 mt-2">
-            ※ id, majority, minority は必須です
-          </p>
         </div>
       </div>
     </div>
