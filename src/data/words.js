@@ -1,59 +1,79 @@
-export const wordPairs = [
-  { id: 1, majority: "りんご", minority: "なし", category: "果物", difficulty: "easy" },
-  { id: 2, majority: "犬", minority: "猫", category: "動物", difficulty: "easy" },
-  { id: 3, majority: "ラーメン", minority: "うどん", category: "食べ物", difficulty: "easy" },
-  { id: 4, majority: "野球", minority: "サッカー", category: "スポーツ", difficulty: "easy" },
+// Home セット（家庭・日常向け）
+const homeWordPairs = [
+  // 簡単
+  { id: 1, majority: "犬", minority: "猫", category: "動物", difficulty: "easy" },
+  { id: 2, majority: "りんご", minority: "みかん", category: "果物", difficulty: "easy" },
+  { id: 3, majority: "サッカー", minority: "野球", category: "スポーツ", difficulty: "easy" },
+  { id: 4, majority: "東京", minority: "大阪", category: "都市", difficulty: "easy" },
   { id: 5, majority: "夏", minority: "冬", category: "季節", difficulty: "easy" },
-  { id: 6, majority: "スマートフォン", minority: "タブレット", category: "デバイス", difficulty: "medium" },
-  { id: 7, majority: "コーヒー", minority: "紅茶", category: "飲み物", difficulty: "easy" },
-  { id: 8, majority: "映画館", minority: "劇場", category: "施設", difficulty: "medium" },
+  { id: 6, majority: "ラーメン", minority: "うどん", category: "食べ物", difficulty: "easy" },
+  { id: 7, majority: "電車", minority: "バス", category: "交通", difficulty: "easy" },
+  { id: 8, majority: "山", minority: "海", category: "自然", difficulty: "easy" },
   { id: 9, majority: "朝", minority: "夜", category: "時間", difficulty: "easy" },
-  { id: 10, majority: "海", minority: "山", category: "自然", difficulty: "easy" },
-  { id: 11, majority: "電車", minority: "バス", category: "交通", difficulty: "easy" },
-  { id: 12, majority: "カレー", minority: "シチュー", category: "食べ物", difficulty: "easy" },
-  { id: 13, majority: "ピアノ", minority: "ギター", category: "楽器", difficulty: "easy" },
-  { id: 14, majority: "小説", minority: "漫画", category: "読み物", difficulty: "easy" },
-  { id: 15, majority: "寿司", minority: "刺身", category: "食べ物", difficulty: "medium" },
-  { id: 16, majority: "テニス", minority: "バドミントン", category: "スポーツ", difficulty: "easy" },
-  { id: 17, majority: "春", minority: "秋", category: "季節", difficulty: "easy" },
-  { id: 18, majority: "ジュース", minority: "炭酸水", category: "飲み物", difficulty: "easy" },
-  { id: 19, majority: "公園", minority: "広場", category: "場所", difficulty: "medium" },
-  { id: 20, majority: "レストラン", minority: "カフェ", category: "飲食店", difficulty: "medium" },
-  { id: 21, majority: "マンション", minority: "アパート", category: "住居", difficulty: "medium" },
-  { id: 22, majority: "ノート", minority: "メモ帳", category: "文房具", difficulty: "medium" },
-  { id: 23, majority: "エアコン", minority: "扇風機", category: "家電", difficulty: "easy" },
-  { id: 24, majority: "パン", minority: "ご飯", category: "主食", difficulty: "easy" },
-  { id: 25, majority: "メガネ", minority: "コンタクトレンズ", category: "視力矯正", difficulty: "easy" },
-  { id: 26, majority: "新幹線", minority: "飛行機", category: "長距離交通", difficulty: "easy" },
-  { id: 27, majority: "プール", minority: "海水浴場", category: "水遊び", difficulty: "easy" },
-  { id: 28, majority: "遊園地", minority: "水族館", category: "レジャー施設", difficulty: "easy" },
-  { id: 29, majority: "ハンバーガー", minority: "サンドイッチ", category: "ファストフード", difficulty: "easy" },
-  { id: 30, majority: "ケーキ", minority: "プリン", category: "デザート", difficulty: "easy" },
-  { id: 31, majority: "傘", minority: "レインコート", category: "雨具", difficulty: "easy" },
-  { id: 32, majority: "冷蔵庫", minority: "冷凍庫", category: "家電", difficulty: "medium" },
-  { id: 33, majority: "医者", minority: "看護師", category: "医療職", difficulty: "medium" },
-  { id: 34, majority: "先生", minority: "講師", category: "教育職", difficulty: "medium" },
-  { id: 35, majority: "ライオン", minority: "トラ", category: "動物", difficulty: "easy" },
-  { id: 36, majority: "バナナ", minority: "パイナップル", category: "果物", difficulty: "easy" },
-  { id: 37, majority: "お茶", minority: "水", category: "飲み物", difficulty: "easy" },
-  { id: 38, majority: "ドラマ", minority: "映画", category: "映像作品", difficulty: "medium" },
-  { id: 39, majority: "図書館", minority: "書店", category: "本の場所", difficulty: "medium" },
-  { id: 40, majority: "自転車", minority: "バイク", category: "乗り物", difficulty: "easy" },
-  { id: 41, majority: "シャツ", minority: "Tシャツ", category: "衣服", difficulty: "medium" },
-  { id: 42, majority: "スニーカー", minority: "サンダル", category: "履物", difficulty: "easy" },
-  { id: 43, majority: "帽子", minority: "キャップ", category: "頭に被る物", difficulty: "medium" },
-  { id: 44, majority: "カバン", minority: "リュック", category: "荷物入れ", difficulty: "medium" },
-  { id: 45, majority: "時計", minority: "スマートウォッチ", category: "時間を見る物", difficulty: "medium" },
-  { id: 46, majority: "エレベーター", minority: "エスカレーター", category: "移動設備", difficulty: "easy" },
-  { id: 47, majority: "スーパー", minority: "コンビニ", category: "買い物", difficulty: "easy" },
-  { id: 48, majority: "ホテル", minority: "旅館", category: "宿泊施設", difficulty: "medium" },
-  { id: 49, majority: "ピザ", minority: "グラタン", category: "洋食", difficulty: "medium" },
-  { id: 50, majority: "サラダ", minority: "スープ", category: "料理", difficulty: "easy" },
+  { id: 10, majority: "春", minority: "秋", category: "季節", difficulty: "easy" },
+
+  // 普通
+  { id: 11, majority: "札幌", minority: "仙台", category: "県庁所在地", difficulty: "medium" },
+  { id: 12, majority: "名古屋", minority: "福岡", category: "県庁所在地", difficulty: "medium" },
+  { id: 13, majority: "関東", minority: "関西", category: "地方", difficulty: "medium" },
+  { id: 14, majority: "京都", minority: "奈良", category: "古都", difficulty: "medium" },
+  { id: 15, majority: "富士山", minority: "東京タワー", category: "名所", difficulty: "medium" },
+  { id: 16, majority: "ピアノ", minority: "ギター", category: "楽器", difficulty: "medium" },
+  { id: 17, majority: "バスケットボール", minority: "バレーボール", category: "スポーツ", difficulty: "medium" },
+  { id: 18, majority: "図書館", minority: "本屋", category: "本の場所", difficulty: "medium" },
+
+  // 難しい
+  { id: 19, majority: "北海道", minority: "沖縄", category: "都道府県", difficulty: "hard" },
+  { id: 20, majority: "横浜", minority: "神戸", category: "港町", difficulty: "hard" },
+  { id: 21, majority: "太平洋", minority: "日本海", category: "海", difficulty: "hard" },
+  { id: 22, majority: "信濃川", minority: "利根川", category: "川", difficulty: "hard" },
+  { id: 23, majority: "テニス", minority: "バドミントン", category: "スポーツ", difficulty: "hard" },
+  { id: 24, majority: "マラソン", minority: "駅伝", category: "陸上競技", difficulty: "hard" },
 ];
 
+// Business セット（新規事業・スタートアップ向け）
+const businessWordPairs = [
+  // 簡単
+  { id: 101, majority: "VC", minority: "エンジェル投資家", category: "投資家", difficulty: "easy" },
+  { id: 102, majority: "B2B", minority: "B2C", category: "ビジネスモデル", difficulty: "easy" },
+  { id: 103, majority: "MVP", minority: "プロトタイプ", category: "プロダクト開発", difficulty: "easy" },
+  { id: 104, majority: "スタートアップ", minority: "ベンチャー", category: "企業形態", difficulty: "easy" },
+  { id: 105, majority: "シード", minority: "シリーズA", category: "資金調達", difficulty: "easy" },
+  { id: 106, majority: "KPI", minority: "OKR", category: "目標管理", difficulty: "easy" },
+  { id: 107, majority: "アーリーアダプター", minority: "マジョリティ", category: "顧客層", difficulty: "easy" },
+  { id: 108, majority: "SaaS", minority: "PaaS", category: "クラウドサービス", difficulty: "easy" },
+
+  // 普通
+  { id: 109, majority: "プレシード", minority: "シード", category: "調達ステージ", difficulty: "medium" },
+  { id: 110, majority: "PMF", minority: "GTM", category: "戦略フェーズ", difficulty: "medium" },
+  { id: 111, majority: "CAC", minority: "LTV", category: "指標", difficulty: "medium" },
+  { id: 112, majority: "ARR", minority: "MRR", category: "収益指標", difficulty: "medium" },
+  { id: 113, majority: "バーンレート", minority: "ランウェイ", category: "財務指標", difficulty: "medium" },
+  { id: 114, majority: "ピッチデック", minority: "事業計画書", category: "資料", difficulty: "medium" },
+  { id: 115, majority: "IPO", minority: "M&A", category: "エグジット", difficulty: "medium" },
+  { id: 116, majority: "CVC", minority: "独立系VC", category: "投資家タイプ", difficulty: "medium" },
+
+  // 難しい
+  { id: 117, majority: "ダウンラウンド", minority: "フラットラウンド", category: "調達条件", difficulty: "hard" },
+  { id: 118, majority: "エクイティ", minority: "デット", category: "資金調達方法", difficulty: "hard" },
+  { id: 119, majority: "ユニコーン", minority: "デカコーン", category: "企業評価", difficulty: "hard" },
+  { id: 120, majority: "シリーズB", minority: "シリーズC", category: "調達ラウンド", difficulty: "hard" },
+  { id: 121, majority: "グロース", minority: "シード", category: "投資ステージ", difficulty: "hard" },
+  { id: 122, majority: "アクセラレーター", minority: "インキュベーター", category: "支援組織", difficulty: "hard" },
+];
+
+// お題セット
+export const wordSets = {
+  home: homeWordPairs,
+  business: businessWordPairs
+};
+
+// デフォルトはHomeセット（後方互換性のため）
+export const wordPairs = homeWordPairs;
+
 // ランダム選択用ヘルパー関数
-export const getRandomWordPair = (excludeIds = [], customWords = null) => {
-  const source = customWords || wordPairs;
+export const getRandomWordPair = (excludeIds = [], customWords = null, wordSet = 'home') => {
+  const source = customWords || wordSets[wordSet] || homeWordPairs;
   const available = source.filter(pair => !excludeIds.includes(pair.id));
   if (available.length === 0) {
     return source[Math.floor(Math.random() * source.length)];
@@ -62,13 +82,13 @@ export const getRandomWordPair = (excludeIds = [], customWords = null) => {
 };
 
 // 難易度別フィルタリング
-export const getRandomWordPairByDifficulty = (difficulty = "easy", excludeIds = [], customWords = null) => {
-  const source = customWords || wordPairs;
+export const getRandomWordPairByDifficulty = (difficulty = "easy", excludeIds = [], customWords = null, wordSet = 'home') => {
+  const source = customWords || wordSets[wordSet] || homeWordPairs;
   const filtered = source.filter(
     pair => pair.difficulty === difficulty && !excludeIds.includes(pair.id)
   );
   if (filtered.length === 0) {
-    return getRandomWordPair(excludeIds, customWords);
+    return getRandomWordPair(excludeIds, customWords, wordSet);
   }
   return filtered[Math.floor(Math.random() * filtered.length)];
 };

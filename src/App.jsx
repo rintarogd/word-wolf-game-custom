@@ -46,7 +46,7 @@ function App() {
   }, []);
 
   // ゲーム開始
-  const startGame = useCallback((playerCount, wolfCount, difficulty, playerNames = []) => {
+  const startGame = useCallback((playerCount, wolfCount, difficulty, playerNames = [], wordSet = 'home') => {
     // プレイヤー配列を生成
     const players = Array.from({ length: playerCount }, (_, i) => ({
       id: i,
@@ -68,7 +68,7 @@ function App() {
     }
 
     // お題を選択（カスタムお題がある場合はそちらを使用）
-    const wordPair = getRandomWordPairByDifficulty(difficulty, gameState.usedWordIds, customWords);
+    const wordPair = getRandomWordPairByDifficulty(difficulty, gameState.usedWordIds, customWords, wordSet);
 
     setGameState(prev => ({
       ...prev,

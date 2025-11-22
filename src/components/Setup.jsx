@@ -18,6 +18,7 @@ const Setup = ({ onStart, onManageWords }) => {
   const [playerCount, setPlayerCount] = useState(3);
   const [wolfCount, setWolfCount] = useState(1);
   const [difficulty, setDifficulty] = useState('easy');
+  const [wordSet, setWordSet] = useState('home');
   const [error, setError] = useState('');
   const [showNameSettings, setShowNameSettings] = useState(false);
   const [playerNames, setPlayerNames] = useState([]);
@@ -65,7 +66,7 @@ const Setup = ({ onStart, onManageWords }) => {
     }
 
     setError('');
-    onStart(playerCount, wolfCount, difficulty, playerNames.slice(0, playerCount));
+    onStart(playerCount, wolfCount, difficulty, playerNames.slice(0, playerCount), wordSet);
   };
 
   // プレイヤー名を更新
@@ -95,6 +96,12 @@ const Setup = ({ onStart, onManageWords }) => {
     { id: 'easy', label: '簡単', icon: <Zap size={18} />, color: 'bg-emerald-500', ring: 'ring-emerald-500/20', text: 'text-emerald-600' },
     { id: 'medium', label: '普通', icon: <Brain size={18} />, color: 'bg-blue-500', ring: 'ring-blue-500/20', text: 'text-blue-600' },
     { id: 'hard', label: '難しい', icon: <Skull size={18} />, color: 'bg-rose-500', ring: 'ring-rose-500/20', text: 'text-rose-600' }
+  ];
+
+  // お題セットの設定データ
+  const wordSetOptions = [
+    { id: 'home', label: 'Home', description: '家庭・日常向け' },
+    { id: 'business', label: 'Business', description: '新規事業・企業研修向け' }
   ];
 
   return (
@@ -222,6 +229,41 @@ const Setup = ({ onStart, onManageWords }) => {
                   <p className="text-center text-xs text-slate-400 font-medium pt-1">
                     お題の抽象度が変わります
                   </p>
+                </div>
+
+                {/* お題セット選択 */}
+                <div className="space-y-3">
+                  <label className="text-sm font-bold text-slate-700 pl-1">お題セット</label>
+                  <div className="grid grid-cols-2 gap-3">
+                    {wordSetOptions.map((option) => (
+                      <button
+                        key={option.id}
+                        onClick={() => setWordSet(option.id)}
+                        className={`
+                          relative p-4 rounded-2xl text-left transition-all duration-200 border-2
+                          ${wordSet === option.id
+                            ? 'bg-gradient-to-br from-indigo-50 to-purple-50 border-indigo-300 shadow-md scale-105'
+                            : 'bg-white border-slate-200 hover:border-indigo-200 hover:shadow-sm scale-100'}
+                        `}
+                      >
+                        <div className="flex items-center justify-between mb-1">
+                          <span className={`font-bold text-lg ${wordSet === option.id ? 'text-indigo-700' : 'text-slate-700'}`}>
+                            {option.label}
+                          </span>
+                          {wordSet === option.id && (
+                            <div className="w-5 h-5 bg-indigo-600 rounded-full flex items-center justify-center">
+                              <svg className="w-3 h-3 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={3} d="M5 13l4 4L19 7" />
+                              </svg>
+                            </div>
+                          )}
+                        </div>
+                        <p className={`text-xs ${wordSet === option.id ? 'text-indigo-600' : 'text-slate-500'}`}>
+                          {option.description}
+                        </p>
+                      </button>
+                    ))}
+                  </div>
                 </div>
               </div>
 
