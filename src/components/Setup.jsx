@@ -1,10 +1,32 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
+import { getPlayerNames, savePlayerNames } from '../utils/playerStorage';
 
 const Setup = ({ onStart, onManageWords }) => {
   const [playerCount, setPlayerCount] = useState(3);
   const [wolfCount, setWolfCount] = useState(1);
   const [difficulty, setDifficulty] = useState('easy');
   const [error, setError] = useState('');
+  const [showNameSettings, setShowNameSettings] = useState(false);
+  const [playerNames, setPlayerNames] = useState([]);
+
+  // プレイヤー名をロード
+  useEffect(() => {
+    const savedNames = getPlayerNames();
+    if (savedNames) {
+      setPlayerNames(savedNames);
+    } else {
+      // デフォルト名を設定
+      setPlayerNames(Array.from({ length: 8 }, (_, i) => `プレイヤー${i + 1}`));
+    }
+  }, []);
+
+  // プレイヤー数が変わった時にウルフ数を調整
+  useEffect(() => {
+    const maxWolves = Math.floor(playerCount / 3);
+    if (wolfCount > maxWolves) {
+      setWolfCount(maxWolves);
+    }
+  }, [playerCount, wolfCount]);
 
   const validateAndStart = () => {
     // バリデーション
@@ -29,18 +51,34 @@ const Setup = ({ onStart, onManageWords }) => {
     }
 
     setError('');
-    onStart(playerCount, wolfCount, difficulty);
+    onStart(playerCount, wolfCount, difficulty, playerNames.slice(0, playerCount));
+  };
+
+  // プレイヤー名を更新
+  const updatePlayerName = (index, name) => {
+    const newNames = [...playerNames];
+    newNames[index] = name || `プレイヤー${index + 1}`;
+    setPlayerNames(newNames);
+  };
+
+  // プレイヤー名を保存
+  const saveNames = () => {
+    savePlayerNames(playerNames);
+    setShowNameSettings(false);
+    setError('');
   };
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-blue-500 to-purple-600 flex items-center justify-center p-4">
       <div className="bg-white rounded-lg shadow-2xl p-8 max-w-md w-full">
-        <h1 className="text-3xl font-bold text-center text-gray-800 mb-2">
-          ワードウルフ
-        </h1>
-        <p className="text-center text-gray-600 mb-8">
-          みんなで楽しむ推理ゲーム
-        </p>
+        {!showNameSettings ? (
+          <>
+            <h1 className="text-3xl font-bold text-center text-gray-800 mb-2">
+              ワードウルフ
+            </h1>
+            <p className="text-center text-gray-600 mb-8">
+              みんなで楽しむ推理ゲーム
+            </p>
 
         <div className="space-y-6">
           {/* プレイヤー人数 */}
@@ -152,6 +190,14 @@ const Setup = ({ onStart, onManageWords }) => {
           >
             ゲーム開始
           </button>
+
+          {/* プレイヤー名設定ボタン */}
+          <button
+            onClick={() => setShowNameSettings(true)}
+            className="w-full bg-white border-2 border-blue-500 text-blue-500 font-medium py-3 px-6 rounded-lg hover:bg-blue-50 transition-all"
+          >
+            👤 プレイヤー名を設定
+          </button>
         </div>
 
         {/* ゲームルール */}
@@ -171,6 +217,57 @@ const Setup = ({ onStart, onManageWords }) => {
         >
           ⚙️ お題を管理
         </button>
+          </>
+        ) : (
+          <>
+            {/* プレイヤー名設定画面 */}
+            <div className="flex items-center justify-between mb-6">
+              <h2 className="text-2xl font-bold text-gray-800">プレイヤー名設定</h2>
+              <button
+                onClick={() => setShowNameSettings(false)}
+                className="text-gray-600 hover:text-gray-800 font-medium"
+              >
+                ✕ 閉じる
+              </button>
+            </div>
+
+            <p className="text-sm text-gray-600 mb-6">
+              最大8人分のプレイヤー名を設定できます。設定した名前は次回以降も使用されます。
+            </p>
+
+            <div className="space-y-3 max-h-[60vh] overflow-y-auto mb-6">
+              {playerNames.map((name, index) => (
+                <div key={index}>
+                  <label className="block text-sm font-medium text-gray-700 mb-1">
+                    プレイヤー{index + 1}
+                  </label>
+                  <input
+                    type="text"
+                    value={name}
+                    onChange={(e) => updatePlayerName(index, e.target.value)}
+                    placeholder={`プレイヤー${index + 1}`}
+                    className="w-full px-4 py-2 border-2 border-gray-300 rounded-lg focus:border-blue-500 focus:outline-none"
+                  />
+                </div>
+              ))}
+            </div>
+
+            <div className="flex gap-3">
+              <button
+                onClick={saveNames}
+                className="flex-1 bg-gradient-to-r from-blue-500 to-purple-600 text-white font-bold py-3 px-6 rounded-lg hover:from-blue-600 hover:to-purple-700 transition-all"
+              >
+                保存
+              </button>
+              <button
+                onClick={() => setShowNameSettings(false)}
+                className="flex-1 bg-gray-300 text-gray-700 font-medium py-3 px-6 rounded-lg hover:bg-gray-400 transition-all"
+              >
+                キャンセル
+              </button>
+            </div>
+          </>
+        )}
       </div>
     </div>
   );

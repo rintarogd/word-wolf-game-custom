@@ -2,8 +2,7 @@ import { useState } from 'react';
 import {
   getCustomWords,
   saveCustomWords,
-  clearCustomWords,
-  downloadJSON
+  clearCustomWords
 } from '../utils/wordStorage';
 import { wordPairs as defaultWords } from '../data/words';
 
@@ -53,13 +52,6 @@ const WordManager = ({ onClose, onOpenJSONUpload }) => {
     setError('');
     setFormData({ majority: '', minority: '', category: '', difficulty: 'easy' });
     setShowForm(false);
-  };
-
-  // 現在のお題をダウンロード
-  const handleDownloadCurrent = () => {
-    const words = customWords || defaultWords;
-    downloadJSON(words, 'my-word-pairs.json');
-    setSuccess('現在のお題をダウンロードしました');
   };
 
   const currentWordCount = customWords ? customWords.length : defaultWords.length;
@@ -201,31 +193,17 @@ const WordManager = ({ onClose, onOpenJSONUpload }) => {
             )}
           </div>
 
-          {/* JSONファイルアップロード */}
+          {/* JSONファイルアップロード・ダウンロード */}
           <div className="border-2 border-blue-200 rounded-lg p-6">
-            <h3 className="font-bold text-gray-800 mb-2">📁 JSONファイルから読み込み</h3>
+            <h3 className="font-bold text-gray-800 mb-2">📁 JSONファイル管理</h3>
             <p className="text-sm text-gray-600 mb-4">
-              複数のお題を一度に登録したい場合は、JSONファイルを使用できます
+              複数のお題を一度に登録したい場合や、現在のお題をバックアップする場合に使用します
             </p>
             <button
               onClick={onOpenJSONUpload}
               className="w-full bg-gradient-to-r from-blue-500 to-cyan-600 text-white font-bold py-3 px-6 rounded-lg hover:from-blue-600 hover:to-cyan-700 transition-all transform hover:scale-105 shadow-lg"
             >
-              JSONアップロード画面へ →
-            </button>
-          </div>
-
-          {/* ダウンロード */}
-          <div className="border-2 border-gray-200 rounded-lg p-6">
-            <h3 className="font-bold text-gray-800 mb-2">お題をダウンロード</h3>
-            <p className="text-sm text-gray-600 mb-4">
-              現在のお題をJSONファイルとしてダウンロードできます
-            </p>
-            <button
-              onClick={handleDownloadCurrent}
-              className="w-full bg-gray-200 text-gray-700 font-medium py-3 px-4 rounded-lg hover:bg-gray-300 transition-colors"
-            >
-              💾 現在のお題をダウンロード
+              JSONアップロード / ダウンロード画面へ →
             </button>
           </div>
 

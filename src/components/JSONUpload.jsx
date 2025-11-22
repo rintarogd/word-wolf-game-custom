@@ -1,15 +1,18 @@
 import { useState, useRef } from 'react';
 import {
+  getCustomWords,
   saveCustomWords,
   validateWordPairs,
   generateSampleJSON,
   downloadJSON
 } from '../utils/wordStorage';
+import { wordPairs as defaultWords } from '../data/words';
 
 const JSONUpload = ({ onBack }) => {
   const [error, setError] = useState('');
   const [success, setSuccess] = useState('');
   const fileInputRef = useRef(null);
+  const customWords = getCustomWords();
 
   // ファイルアップロード
   const handleFileUpload = (event) => {
@@ -46,6 +49,13 @@ const JSONUpload = ({ onBack }) => {
     const sample = generateSampleJSON();
     downloadJSON(sample, 'sample-word-pairs.json');
     setSuccess('サンプルファイルをダウンロードしました');
+  };
+
+  // 現在のお題をダウンロード
+  const handleDownloadCurrent = () => {
+    const words = customWords || defaultWords;
+    downloadJSON(words, 'my-word-pairs.json');
+    setSuccess('現在のお題をダウンロードしました');
   };
 
   return (
@@ -110,18 +120,33 @@ const JSONUpload = ({ onBack }) => {
           </p>
         </div>
 
-        {/* サンプルダウンロード */}
+        {/* ダウンロード */}
         <div className="border-2 border-gray-200 rounded-lg p-6 mb-6">
-          <h3 className="font-bold text-gray-800 mb-2">サンプルファイル</h3>
-          <p className="text-sm text-gray-600 mb-4">
-            JSONファイルの形式がわからない場合は、サンプルをダウンロードして参考にしてください
-          </p>
-          <button
-            onClick={handleDownloadSample}
-            className="w-full bg-gray-200 text-gray-700 font-medium py-3 px-4 rounded-lg hover:bg-gray-300 transition-colors"
-          >
-            📝 サンプルをダウンロード
-          </button>
+          <h3 className="font-bold text-gray-800 mb-3">お題のダウンロード</h3>
+          <div className="space-y-3">
+            <div>
+              <p className="text-sm text-gray-600 mb-2">
+                現在のお題をJSONファイルとして保存
+              </p>
+              <button
+                onClick={handleDownloadCurrent}
+                className="w-full bg-gradient-to-r from-purple-500 to-pink-600 text-white font-bold py-3 px-4 rounded-lg hover:from-purple-600 hover:to-pink-700 transition-all transform hover:scale-105 shadow-lg"
+              >
+                💾 現在のお題をダウンロード
+              </button>
+            </div>
+            <div className="border-t border-gray-200 pt-3">
+              <p className="text-sm text-gray-600 mb-2">
+                JSONファイルの形式がわからない場合はサンプルを参照
+              </p>
+              <button
+                onClick={handleDownloadSample}
+                className="w-full bg-gray-200 text-gray-700 font-medium py-3 px-4 rounded-lg hover:bg-gray-300 transition-colors"
+              >
+                📝 サンプルをダウンロード
+              </button>
+            </div>
+          </div>
         </div>
 
         {/* JSON形式の説明 */}

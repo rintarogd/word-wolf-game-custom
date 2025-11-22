@@ -46,11 +46,11 @@ function App() {
   }, []);
 
   // ゲーム開始
-  const startGame = useCallback((playerCount, wolfCount, difficulty) => {
+  const startGame = useCallback((playerCount, wolfCount, difficulty, playerNames = []) => {
     // プレイヤー配列を生成
     const players = Array.from({ length: playerCount }, (_, i) => ({
       id: i,
-      name: `プレイヤー${i + 1}`,
+      name: playerNames[i] || `プレイヤー${i + 1}`,
       isWolf: false
     }));
 
