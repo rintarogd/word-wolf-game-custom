@@ -33,14 +33,14 @@ const Result = ({ players, votes, wolfIndices, wordPair, onPlayAgain, onNewWord 
   const isCitizenWin = isWolfCaught;
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-indigo-600 via-purple-600 to-indigo-800 flex items-center justify-center p-4 font-sans">
+    <div className="min-h-screen flex items-center justify-center p-4 font-sans">
       <div className="bg-white/95 backdrop-blur-xl rounded-3xl shadow-2xl p-4 lg:p-6 max-w-6xl w-full border border-white/20">
         {/* 勝敗表示 */}
         <div className="text-center mb-3 lg:mb-4">
           <div className={`inline-flex items-center gap-2 px-6 py-3 rounded-full mb-3 shadow-lg ${
             isCitizenWin
-              ? 'bg-gradient-to-r from-emerald-500 to-green-600 shadow-emerald-500/30'
-              : 'bg-gradient-to-r from-rose-500 to-pink-600 shadow-rose-500/30'
+              ? 'bg-gradient-to-r from-forest-500 to-forest-600 shadow-forest-500/30'
+              : 'bg-gradient-to-r from-crimson-500 to-crimson-600 shadow-crimson-500/30'
           }`}>
             <Trophy className="text-white" size={24} />
             <h2 className="text-2xl font-bold text-white whitespace-nowrap">
@@ -176,7 +176,7 @@ const Result = ({ players, votes, wolfIndices, wordPair, onPlayAgain, onNewWord 
         <div className="space-y-2 mt-3 lg:mt-4 lg:grid lg:grid-cols-2 lg:gap-3 lg:space-y-0">
           <button
             onClick={onPlayAgain}
-            className="group relative w-full bg-gradient-to-r from-emerald-500 to-green-600 text-white font-bold py-3 px-6 rounded-2xl hover:from-emerald-600 hover:to-green-700 transition-all transform hover:scale-[1.02] active:scale-[0.98] shadow-lg shadow-emerald-500/30 text-base overflow-hidden"
+            className="group relative w-full bg-gradient-to-r from-forest-500 to-forest-600 text-white font-bold py-3 px-6 rounded-2xl hover:from-forest-600 hover:to-forest-700 transition-all transform hover:scale-[1.02] active:scale-[0.98] shadow-lg shadow-forest-500/30 text-base overflow-hidden"
           >
             <div className="absolute inset-0 bg-white/20 group-hover:translate-x-full transition-transform duration-500 ease-out -skew-x-12 -translate-x-full" />
             <span className="relative flex items-center justify-center gap-2">
@@ -187,7 +187,7 @@ const Result = ({ players, votes, wolfIndices, wordPair, onPlayAgain, onNewWord 
 
           <button
             onClick={onNewWord}
-            className="group relative w-full bg-gradient-to-r from-indigo-600 to-purple-600 text-white font-bold py-3 px-6 rounded-2xl hover:from-indigo-700 hover:to-purple-700 transition-all transform hover:scale-[1.02] active:scale-[0.98] shadow-lg shadow-indigo-500/30 text-base overflow-hidden"
+            className="group relative w-full bg-gradient-to-r from-muted-indigo-600 to-muted-purple-600 text-white font-bold py-3 px-6 rounded-2xl hover:from-muted-indigo-700 hover:to-muted-purple-700 transition-all transform hover:scale-[1.02] active:scale-[0.98] shadow-lg shadow-muted-indigo-500/30 text-base overflow-hidden"
           >
             <div className="absolute inset-0 bg-white/20 group-hover:translate-x-full transition-transform duration-500 ease-out -skew-x-12 -translate-x-full" />
             <span className="relative flex items-center justify-center gap-2">

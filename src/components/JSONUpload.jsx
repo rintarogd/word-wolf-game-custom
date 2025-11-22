@@ -72,7 +72,7 @@ const JSONUpload = ({ onBack }) => {
         <div className="bg-white rounded-3xl shadow-2xl p-8 max-w-2xl w-full max-h-[90vh] overflow-y-auto">
           {/* ヘッダー */}
           <div className="flex items-center justify-between mb-6">
-            <h2 className="text-3xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-indigo-600 to-purple-600">JSONファイル管理</h2>
+            <h2 className="text-3xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-muted-indigo-600 to-muted-purple-600">JSONファイル管理</h2>
             <button
               onClick={onBack}
               className="text-slate-600 hover:text-slate-800 font-medium flex items-center gap-2"
@@ -95,13 +95,13 @@ const JSONUpload = ({ onBack }) => {
 
           {/* メッセージ */}
           {error && (
-            <div className="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded-lg mb-4">
+            <div className="bg-crimson-100 border border-crimson-400 text-crimson-700 px-4 py-3 rounded-lg mb-4">
               {error}
             </div>
           )}
 
           {success && (
-            <div className="bg-green-100 border border-green-400 text-green-700 px-4 py-3 rounded-lg mb-4">
+            <div className="bg-forest-100 border border-forest-400 text-forest-700 px-4 py-3 rounded-lg mb-4">
               {success}
             </div>
           )}
@@ -145,7 +145,7 @@ const JSONUpload = ({ onBack }) => {
                 </p>
                 <button
                   onClick={handleDownloadCurrent}
-                  className="w-full bg-gradient-to-r from-purple-500 to-pink-600 text-white font-bold py-3 px-4 rounded-xl hover:from-purple-600 hover:to-pink-700 transition-all transform hover:scale-[1.02] shadow-lg"
+                  className="w-full bg-gradient-to-r from-muted-purple-500 to-crimson-600 text-white font-bold py-3 px-4 rounded-xl hover:from-muted-purple-600 hover:to-crimson-700 transition-all transform hover:scale-[1.02] shadow-lg"
                 >
                   <span className="flex items-center justify-center gap-2">
                     <Download size={18} />
@@ -193,7 +193,7 @@ const JSONUpload = ({ onBack }) => {
             </pre>
             <div className="mt-4 space-y-2 text-sm">
               <p className="text-slate-700">
-                <span className="font-bold text-red-600">必須項目:</span>
+                <span className="font-bold text-crimson-600">必須項目:</span>
               </p>
               <ul className="list-disc list-inside text-slate-600 space-y-1 ml-4">
                 <li><code className="bg-slate-200 px-1 rounded">id</code> (数値): 一意のID</li>

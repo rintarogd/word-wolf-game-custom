@@ -93,27 +93,27 @@ const Setup = ({ onStart, onManageWords }) => {
 
   // 難易度の設定データ
   const difficulties = [
-    { id: 'easy', label: '簡単', icon: <Zap size={18} />, color: 'bg-emerald-500', ring: 'ring-emerald-500/20', text: 'text-emerald-600' },
+    { id: 'easy', label: '簡単', icon: <Zap size={18} />, color: 'bg-forest-500', ring: 'ring-forest-500/20', text: 'text-forest-600' },
     { id: 'medium', label: '普通', icon: <Brain size={18} />, color: 'bg-blue-500', ring: 'ring-blue-500/20', text: 'text-blue-600' },
-    { id: 'hard', label: '難しい', icon: <Skull size={18} />, color: 'bg-rose-500', ring: 'ring-rose-500/20', text: 'text-rose-600' }
+    { id: 'hard', label: '難しい', icon: <Skull size={18} />, color: 'bg-crimson-500', ring: 'ring-crimson-500/20', text: 'text-crimson-600' }
   ];
 
   // お題セットの設定データ
   const wordSetOptions = [
-    { id: 'home', label: 'Home', description: '家庭・日常向け' },
-    { id: 'business', label: 'Business', description: '新規事業・企業研修向け' }
+    { id: 'home', label: 'Home', description: 'ファミリー向け' },
+    { id: 'business', label: 'Business', description: '企業研修向け' }
   ];
 
   return (
     <>
-      <div className="min-h-screen bg-gradient-to-br from-indigo-600 via-purple-600 to-indigo-800 flex items-center justify-center p-4 font-sans text-slate-800">
+      <div className="min-h-screen flex items-center justify-center p-4 font-sans text-slate-800">
         <div className="w-full max-w-md lg:max-w-2xl bg-white/95 backdrop-blur-xl rounded-3xl shadow-2xl overflow-hidden border border-white/20">
             {/* ヘッダーエリア */}
-            <div className="pt-8 pb-6 px-6 text-center bg-gradient-to-b from-indigo-50/50 to-transparent">
-              <h1 className="text-4xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-indigo-600 to-purple-600 mb-2" style={{ fontFamily: 'Georgia, "Times New Roman", Times, serif' }}>
+            <div className="pt-8 pb-6 px-6 text-center bg-gradient-to-b from-muted-indigo-50/50 to-transparent">
+              <h1 className="text-4xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-muted-indigo-600 to-muted-purple-600 mb-2" style={{ fontFamily: 'Georgia, "Times New Roman", Times, serif' }}>
                 Word Wolf
               </h1>
-              <p className="text-sm font-medium text-transparent bg-clip-text bg-gradient-to-r from-indigo-600 to-purple-600">
+              <p className="text-sm font-medium text-transparent bg-clip-text bg-gradient-to-r from-muted-indigo-600 to-muted-purple-600">
                 会話の駆け引きで狼を見つけ出せ
               </p>
             </div>
@@ -121,7 +121,7 @@ const Setup = ({ onStart, onManageWords }) => {
             <div className="p-6 space-y-8">
               {/* エラーメッセージ */}
               {error && (
-                <div className="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded-lg text-sm">
+                <div className="bg-crimson-100 border border-crimson-400 text-crimson-700 px-4 py-3 rounded-lg text-sm">
                   {error}
                 </div>
               )}
@@ -134,10 +134,10 @@ const Setup = ({ onStart, onManageWords }) => {
                   <div className="bg-slate-50 rounded-2xl p-4 border border-slate-100 shadow-sm">
                   <div className="flex justify-between items-center mb-4">
                     <label className="text-sm font-bold text-slate-700 flex items-center gap-2">
-                      <Users className="text-indigo-500" size={18} />
+                      <Users className="text-muted-indigo-500" size={18} />
                       プレイヤー人数
                     </label>
-                    <span className="text-xs font-bold text-indigo-500 bg-indigo-50 px-2 py-1 rounded-md">
+                    <span className="text-xs font-bold text-muted-indigo-500 bg-muted-indigo-50 px-2 py-1 rounded-md">
                       合計
                     </span>
                   </div>
@@ -168,10 +168,10 @@ const Setup = ({ onStart, onManageWords }) => {
                   <div className="bg-slate-50 rounded-2xl p-4 border border-slate-100 shadow-sm">
                   <div className="flex justify-between items-center mb-4">
                     <label className="text-sm font-bold text-slate-700 flex items-center gap-2">
-                      <User className="text-pink-500" size={18} />
+                      <User className="text-crimson-500" size={18} />
                       ウルフの人数
                     </label>
-                    <span className="text-xs font-bold text-pink-500 bg-pink-50 px-2 py-1 rounded-md">
+                    <span className="text-xs font-bold text-crimson-500 bg-crimson-50 px-2 py-1 rounded-md">
                       少数派
                     </span>
                   </div>
@@ -199,71 +199,65 @@ const Setup = ({ onStart, onManageWords }) => {
                   </div>
                 </div>
 
-                {/* お題セット選択 */}
-                <div className="space-y-3">
-                  <label className="text-sm font-bold text-slate-700 pl-1">お題セット</label>
-                  <div className="grid grid-cols-2 gap-3">
-                    {wordSetOptions.map((option) => (
-                      <button
-                        key={option.id}
-                        onClick={() => setWordSet(option.id)}
-                        className={`
-                          relative p-4 rounded-2xl text-left transition-all duration-200 border-2
-                          ${wordSet === option.id
-                            ? 'bg-gradient-to-br from-indigo-50 to-purple-50 border-indigo-300 shadow-md scale-105'
-                            : 'bg-white border-slate-200 hover:border-indigo-200 hover:shadow-sm scale-100'}
-                        `}
-                      >
-                        <div className="flex items-center justify-between mb-1">
-                          <span className={`font-bold text-lg ${wordSet === option.id ? 'text-indigo-700' : 'text-slate-700'}`}>
+                {/* お題セットと難易度 - 横並び（iPadで1行に） */}
+                <div className="grid grid-cols-1 lg:grid-cols-2 gap-4">
+                  {/* お題セット選択 */}
+                  <div className="flex flex-col">
+                    <label className="text-sm font-bold text-slate-700 pl-1 mb-3">お題セット</label>
+                    <div className="grid grid-cols-2 gap-2 bg-slate-100 p-1.5 rounded-2xl flex-1 content-center">
+                      {wordSetOptions.map((option) => (
+                        <button
+                          key={option.id}
+                          onClick={() => setWordSet(option.id)}
+                          className={`
+                            relative flex flex-col items-center justify-center py-3 rounded-xl text-sm font-bold transition-all duration-200
+                            ${wordSet === option.id
+                              ? 'bg-white shadow-md text-slate-800 scale-100'
+                              : 'text-slate-400 hover:text-slate-600 hover:bg-slate-200/50 scale-95'}
+                          `}
+                        >
+                          <span className={`mb-1 transition-colors ${wordSet === option.id ? (option.id === 'home' ? 'text-forest-600' : 'text-muted-indigo-600') : ''}`}>
                             {option.label}
                           </span>
+                          <span className="text-xs">{option.description}</span>
+
+                          {/* アクティブ時のインジケーター */}
                           {wordSet === option.id && (
-                            <div className="w-5 h-5 bg-indigo-600 rounded-full flex items-center justify-center">
-                              <svg className="w-3 h-3 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={3} d="M5 13l4 4L19 7" />
-                              </svg>
-                            </div>
+                            <span className={`absolute inset-0 rounded-xl ring-2 ${option.id === 'home' ? 'ring-forest-500/20' : 'ring-muted-indigo-500/20'}`} />
                           )}
-                        </div>
-                        <p className={`text-xs ${wordSet === option.id ? 'text-indigo-600' : 'text-slate-500'}`}>
-                          {option.description}
-                        </p>
-                      </button>
-                    ))}
+                        </button>
+                      ))}
+                    </div>
                   </div>
-                </div>
 
-                {/* 難易度設定 */}
-                <div className="space-y-3">
-                  <label className="text-sm font-bold text-slate-700 pl-1">難易度</label>
-                  <div className="grid grid-cols-3 gap-2 bg-slate-100 p-1.5 rounded-2xl">
-                    {difficulties.map((d) => (
-                      <button
-                        key={d.id}
-                        onClick={() => setDifficulty(d.id)}
-                        className={`
-                          relative flex flex-col items-center justify-center py-3 rounded-xl text-sm font-bold transition-all duration-200
-                          ${difficulty === d.id
-                            ? 'bg-white shadow-md text-slate-800 scale-100'
-                            : 'text-slate-400 hover:text-slate-600 hover:bg-slate-200/50 scale-95'}
-                        `}
-                      >
-                        <span className={`mb-1 transition-colors ${difficulty === d.id ? d.text : ''}`}>
-                          {d.icon}
-                        </span>
-                        {d.label}
+                  {/* 難易度設定 */}
+                  <div className="flex flex-col">
+                    <label className="text-sm font-bold text-slate-700 pl-1 mb-3">難易度</label>
+                    <div className="grid grid-cols-3 gap-2 bg-slate-100 p-1.5 rounded-2xl flex-1 content-center">
+                      {difficulties.map((d) => (
+                        <button
+                          key={d.id}
+                          onClick={() => setDifficulty(d.id)}
+                          className={`
+                            relative flex flex-col items-center justify-center py-3 rounded-xl text-sm font-bold transition-all duration-200
+                            ${difficulty === d.id
+                              ? 'bg-white shadow-md text-slate-800 scale-100'
+                              : 'text-slate-400 hover:text-slate-600 hover:bg-slate-200/50 scale-95'}
+                          `}
+                        >
+                          <span className={`mb-1 transition-colors ${difficulty === d.id ? d.text : ''}`}>
+                            {d.icon}
+                          </span>
+                          {d.label}
 
-                        {/* アクティブ時のインジケーター */}
-                        {difficulty === d.id && (
-                          <span className={`absolute inset-0 rounded-xl ring-2 ${d.ring}`} />
-                        )}
-                      </button>
-                    ))}
+                          {/* アクティブ時のインジケーター */}
+                          {difficulty === d.id && (
+                            <span className={`absolute inset-0 rounded-xl ring-2 ${d.ring}`} />
+                          )}
+                        </button>
+                      ))}
+                    </div>
                   </div>
-                  <p className="text-center text-xs text-slate-400 font-medium pt-1">
-                    お題の抽象度が変わります
-                  </p>
                 </div>
               </div>
 
@@ -271,7 +265,7 @@ const Setup = ({ onStart, onManageWords }) => {
               <div className="grid lg:grid-cols-2 gap-4 pt-2">
                 <button
                   onClick={validateAndStart}
-                  className="group relative w-full py-4 bg-gradient-to-r from-indigo-600 to-purple-600 rounded-2xl text-white font-bold text-lg shadow-lg shadow-indigo-500/30 overflow-hidden transform transition-all hover:scale-[1.02] active:scale-[0.98]"
+                  className="group relative w-full py-4 bg-gradient-to-r from-muted-indigo-600 to-muted-purple-600 rounded-2xl text-white font-bold text-lg shadow-lg shadow-muted-indigo-500/30 overflow-hidden transform transition-all hover:scale-[1.02] active:scale-[0.98]"
                 >
                   <div className="absolute inset-0 bg-white/20 group-hover:translate-x-full transition-transform duration-500 ease-out -skew-x-12 -translate-x-full" />
                   <span className="relative flex items-center justify-center gap-2">
@@ -282,7 +276,7 @@ const Setup = ({ onStart, onManageWords }) => {
 
                 <button
                   onClick={() => setShowNameSettings(true)}
-                  className="w-full py-3.5 bg-white border-2 border-indigo-100 text-indigo-600 rounded-2xl font-bold text-base hover:bg-indigo-50 hover:border-indigo-200 transition-colors flex items-center justify-center gap-2"
+                  className="w-full py-3.5 bg-white border-2 border-muted-indigo-100 text-muted-indigo-600 rounded-2xl font-bold text-base hover:bg-muted-indigo-50 hover:border-muted-indigo-200 transition-colors flex items-center justify-center gap-2"
                 >
                   <Edit3 size={18} />
                   プレイヤー名を設定
@@ -307,7 +301,7 @@ const Setup = ({ onStart, onManageWords }) => {
               {showRules && (
                 <div className="px-6 py-4 bg-slate-100/50 text-sm text-slate-600 leading-relaxed space-y-4 animate-fade-in">
                   <div>
-                    <h3 className="font-bold text-indigo-600 mb-1 flex items-center gap-2">
+                    <h3 className="font-bold text-muted-indigo-600 mb-1 flex items-center gap-2">
                       ワードウルフとは
                     </h3>
                     <p className="text-xs leading-5">
@@ -316,14 +310,14 @@ const Setup = ({ onStart, onManageWords }) => {
                   </div>
 
                   <div className="bg-white p-3 rounded-lg border border-slate-200">
-                    <h3 className="font-bold text-indigo-600 mb-1 text-xs flex items-center gap-1">
+                    <h3 className="font-bold text-muted-indigo-600 mb-1 text-xs flex items-center gap-1">
                       <Users size={14} /> 多数派（市民）の目的
                     </h3>
                     <p className="text-xs">会話を通じてワードウルフを見つけ出し、投票で特定することが目標です。</p>
                   </div>
 
                   <div className="bg-white p-3 rounded-lg border border-slate-200">
-                    <h3 className="font-bold text-pink-500 mb-1 text-xs flex items-center gap-1">
+                    <h3 className="font-bold text-crimson-500 mb-1 text-xs flex items-center gap-1">
                       <User size={14} /> 少数派（ワードウルフ）の目的
                     </h3>
                     <p className="text-xs">会話の流れで自分がワードウルフだと気づいたら、他のプレイヤーに合わせて会話をし、正体がばれないように立ち回ります。投票で自分への投票を回避できれば勝利です。</p>
@@ -332,13 +326,13 @@ const Setup = ({ onStart, onManageWords }) => {
                   <div>
                     <h3 className="font-bold text-slate-700 mb-2 text-xs">勝利条件</h3>
                     <ul className="space-y-2">
-                      <li className="flex items-center gap-2 text-xs bg-indigo-50 p-2 rounded border border-indigo-100">
-                        <span className="w-1.5 h-1.5 rounded-full bg-indigo-500 flex-shrink-0"></span>
-                        投票でウルフを当てた <span className="text-slate-400 mx-1">→</span> <span className="font-bold text-indigo-600">多数派の勝利</span>
+                      <li className="flex items-center gap-2 text-xs bg-muted-indigo-50 p-2 rounded border border-muted-indigo-100">
+                        <span className="w-1.5 h-1.5 rounded-full bg-muted-indigo-500 flex-shrink-0"></span>
+                        投票でウルフを当てた <span className="text-slate-400 mx-1">→</span> <span className="font-bold text-muted-indigo-600">多数派の勝利</span>
                       </li>
-                      <li className="flex items-center gap-2 text-xs bg-pink-50 p-2 rounded border border-pink-100">
-                        <span className="w-1.5 h-1.5 rounded-full bg-pink-500 flex-shrink-0"></span>
-                        ウルフを当てられなかった <span className="text-slate-400 mx-1">→</span> <span className="font-bold text-pink-500">ウルフの勝利</span>
+                      <li className="flex items-center gap-2 text-xs bg-crimson-50 p-2 rounded border border-crimson-100">
+                        <span className="w-1.5 h-1.5 rounded-full bg-crimson-500 flex-shrink-0"></span>
+                        ウルフを当てられなかった <span className="text-slate-400 mx-1">→</span> <span className="font-bold text-crimson-500">ウルフの勝利</span>
                       </li>
                     </ul>
                   </div>
@@ -385,7 +379,7 @@ const Setup = ({ onStart, onManageWords }) => {
                 </p>
                 <button
                   onClick={clearAllNames}
-                  className="text-sm text-red-600 hover:text-red-700 font-medium whitespace-nowrap ml-4"
+                  className="text-sm text-crimson-600 hover:text-crimson-700 font-medium whitespace-nowrap ml-4"
                 >
                   すべてクリア
                 </button>
@@ -402,7 +396,7 @@ const Setup = ({ onStart, onManageWords }) => {
                       value={name}
                       onChange={(e) => updatePlayerName(index, e.target.value)}
                       placeholder={`プレイヤー${index + 1}`}
-                      className="w-full px-4 py-2 border-2 border-slate-200 rounded-xl focus:border-indigo-500 focus:outline-none transition-colors"
+                      className="w-full px-4 py-2 border-2 border-slate-200 rounded-xl focus:border-muted-indigo-500 focus:outline-none transition-colors"
                     />
                   </div>
                 ))}
@@ -411,7 +405,7 @@ const Setup = ({ onStart, onManageWords }) => {
               <div className="flex gap-3">
                 <button
                   onClick={saveNames}
-                  className="flex-1 bg-gradient-to-r from-indigo-600 to-purple-600 text-white font-bold py-3 px-6 rounded-2xl hover:from-indigo-700 hover:to-purple-700 transition-all"
+                  className="flex-1 bg-gradient-to-r from-muted-indigo-600 to-muted-purple-600 text-white font-bold py-3 px-6 rounded-2xl hover:from-muted-indigo-700 hover:to-muted-purple-700 transition-all"
                 >
                   保存
                 </button>

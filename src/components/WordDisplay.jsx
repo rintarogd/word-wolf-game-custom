@@ -38,16 +38,16 @@ const WordDisplay = ({ currentPlayer, wordPair, onNext, totalPlayers }) => {
   }, [isWordVisible, remainingTime]);
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-indigo-600 via-purple-600 to-indigo-800 flex items-center justify-center p-4 font-sans">
+    <div className="min-h-screen flex items-center justify-center p-4 font-sans">
       <div className="bg-white/95 backdrop-blur-xl rounded-3xl shadow-2xl p-8 max-w-md w-full border border-white/20">
         {/* プレイヤー情報 */}
         <div className="text-center mb-6">
-          <div className="inline-flex items-center gap-2 bg-gradient-to-r from-indigo-100 to-purple-100 px-6 py-2 rounded-full mb-4 border border-indigo-200">
-            <span className="text-indigo-800 font-bold text-sm">
+          <div className="inline-flex items-center gap-2 bg-gradient-to-r from-muted-indigo-100 to-muted-purple-100 px-6 py-2 rounded-full mb-4 border border-muted-indigo-200">
+            <span className="text-muted-indigo-800 font-bold text-sm">
               {currentPlayer.id + 1} / {totalPlayers}
             </span>
           </div>
-          <h2 className="text-3xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-indigo-600 to-purple-600 mb-2">
+          <h2 className="text-3xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-muted-indigo-600 to-muted-purple-600 mb-2">
             {currentPlayer.name}の番です
           </h2>
           <p className="text-slate-600 flex items-center justify-center gap-2">
@@ -71,7 +71,7 @@ const WordDisplay = ({ currentPlayer, wordPair, onNext, totalPlayers }) => {
 
             <button
               onClick={showWord}
-              className="group relative w-full py-6 bg-gradient-to-r from-indigo-600 to-purple-600 rounded-2xl text-white font-bold shadow-lg shadow-indigo-500/30 overflow-hidden transform transition-all hover:scale-[1.02] active:scale-[0.98] text-xl"
+              className="group relative w-full py-6 bg-gradient-to-r from-muted-indigo-600 to-muted-purple-600 rounded-2xl text-white font-bold shadow-lg shadow-muted-indigo-500/30 overflow-hidden transform transition-all hover:scale-[1.02] active:scale-[0.98] text-xl"
             >
               <div className="absolute inset-0 bg-white/20 group-hover:translate-x-full transition-transform duration-500 ease-out -skew-x-12 -translate-x-full" />
               <span className="relative flex items-center justify-center gap-2">
@@ -86,7 +86,7 @@ const WordDisplay = ({ currentPlayer, wordPair, onNext, totalPlayers }) => {
           <div className="space-y-6">
             {/* カウントダウン */}
             <div className="text-center">
-              <div className="inline-flex items-center justify-center bg-gradient-to-r from-rose-500 to-pink-500 text-white rounded-full w-20 h-20 text-4xl font-bold mb-4 shadow-lg shadow-rose-500/30 animate-pulse">
+              <div className="inline-flex items-center justify-center bg-gradient-to-r from-crimson-500 to-crimson-500 text-white rounded-full w-20 h-20 text-4xl font-bold mb-4 shadow-lg shadow-crimson-500/30 animate-pulse">
                 {remainingTime}
               </div>
             </div>
@@ -111,21 +111,21 @@ const WordDisplay = ({ currentPlayer, wordPair, onNext, totalPlayers }) => {
 
         {canProceed && (
           <div className="space-y-6">
-            <div className="bg-gradient-to-r from-emerald-50 to-green-50 border-2 border-emerald-200 rounded-2xl p-6 text-center">
-              <p className="text-emerald-800 text-lg font-bold mb-2 flex items-center justify-center gap-2">
+            <div className="bg-gradient-to-r from-forest-50 to-forest-50 border-2 border-forest-200 rounded-2xl p-6 text-center">
+              <p className="text-forest-800 text-lg font-bold mb-2 flex items-center justify-center gap-2">
                 <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={3} d="M5 13l4 4L19 7" />
                 </svg>
                 お題を確認しました
               </p>
-              <p className="text-emerald-700 text-sm">
+              <p className="text-forest-700 text-sm">
                 次の人に端末を渡してください
               </p>
             </div>
 
             <button
               onClick={onNext}
-              className="group relative w-full py-4 bg-gradient-to-r from-emerald-500 to-green-600 rounded-2xl text-white font-bold shadow-lg shadow-emerald-500/30 overflow-hidden transform transition-all hover:scale-[1.02] active:scale-[0.98] text-lg"
+              className="group relative w-full py-4 bg-gradient-to-r from-forest-500 to-forest-600 rounded-2xl text-white font-bold shadow-lg shadow-forest-500/30 overflow-hidden transform transition-all hover:scale-[1.02] active:scale-[0.98] text-lg"
             >
               <div className="absolute inset-0 bg-white/20 group-hover:translate-x-full transition-transform duration-500 ease-out -skew-x-12 -translate-x-full" />
               <span className="relative flex items-center justify-center gap-2">

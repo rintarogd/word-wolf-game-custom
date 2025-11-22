@@ -71,7 +71,7 @@ const WordManager = ({ onClose, onOpenJSONUpload }) => {
         <div className="bg-white rounded-3xl shadow-2xl p-8 max-w-2xl w-full max-h-[90vh] overflow-y-auto">
           {/* ヘッダー */}
           <div className="flex items-center justify-between mb-6">
-            <h2 className="text-3xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-indigo-600 to-purple-600">お題管理</h2>
+            <h2 className="text-3xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-muted-indigo-600 to-muted-purple-600">お題管理</h2>
             <button
               onClick={onClose}
               className="text-slate-600 hover:text-slate-800 font-medium"
@@ -81,18 +81,18 @@ const WordManager = ({ onClose, onOpenJSONUpload }) => {
           </div>
 
           {/* ステータス表示 */}
-          <div className="bg-gradient-to-r from-indigo-50 to-purple-50 border-2 border-indigo-100 rounded-2xl p-4 mb-6">
+          <div className="bg-gradient-to-r from-muted-indigo-50 to-muted-purple-50 border-2 border-muted-indigo-100 rounded-2xl p-4 mb-6">
             <div className="flex items-center justify-between">
               <div>
-                <p className="text-indigo-800 font-bold">
+                <p className="text-muted-indigo-800 font-bold">
                   {isCustom ? 'カスタムお題' : 'デフォルトお題'}
                 </p>
-                <p className="text-indigo-600 text-sm">
+                <p className="text-muted-indigo-600 text-sm">
                   現在 {currentWordCount} 個のお題が登録されています
                 </p>
               </div>
               {isCustom && (
-                <span className="bg-green-500 text-white px-3 py-1 rounded-full text-sm font-bold flex items-center gap-1">
+                <span className="bg-forest-500 text-white px-3 py-1 rounded-full text-sm font-bold flex items-center gap-1">
                   <Check size={16} />
                   適用中
                 </span>
@@ -102,13 +102,13 @@ const WordManager = ({ onClose, onOpenJSONUpload }) => {
 
           {/* メッセージ */}
           {error && (
-            <div className="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded-lg mb-4">
+            <div className="bg-crimson-100 border border-crimson-400 text-crimson-700 px-4 py-3 rounded-lg mb-4">
               {error}
             </div>
           )}
 
           {success && (
-            <div className="bg-green-100 border border-green-400 text-green-700 px-4 py-3 rounded-lg mb-4">
+            <div className="bg-forest-100 border border-forest-400 text-forest-700 px-4 py-3 rounded-lg mb-4">
               {success}
             </div>
           )}
@@ -116,16 +116,16 @@ const WordManager = ({ onClose, onOpenJSONUpload }) => {
           {/* アクション */}
           <div className="space-y-4">
             {/* フォーム入力でお題を追加 */}
-            <div className="border-2 border-emerald-100 rounded-2xl p-6 bg-gradient-to-br from-emerald-50/50 to-transparent">
+            <div className="border-2 border-forest-100 rounded-2xl p-6 bg-gradient-to-br from-forest-50/50 to-transparent">
               <h3 className="font-bold text-slate-800 mb-3 flex items-center gap-2">
-                <Plus size={20} className="text-emerald-600" />
+                <Plus size={20} className="text-forest-600" />
                 フォームでお題を追加
               </h3>
 
               {!showForm ? (
                 <button
                   onClick={() => setShowForm(true)}
-                  className="w-full bg-gradient-to-r from-emerald-500 to-green-600 text-white font-bold py-3 px-6 rounded-xl hover:from-emerald-600 hover:to-green-700 transition-all transform hover:scale-[1.02] shadow-lg"
+                  className="w-full bg-gradient-to-r from-forest-500 to-forest-600 text-white font-bold py-3 px-6 rounded-xl hover:from-forest-600 hover:to-forest-700 transition-all transform hover:scale-[1.02] shadow-lg"
                 >
                   <span className="flex items-center justify-center gap-2">
                     <Plus size={20} />
@@ -136,27 +136,27 @@ const WordManager = ({ onClose, onOpenJSONUpload }) => {
                 <div className="space-y-3">
                   <div>
                     <label className="block text-sm font-medium text-slate-700 mb-1">
-                      多数派のお題 <span className="text-red-500">*</span>
+                      多数派のお題 <span className="text-crimson-500">*</span>
                     </label>
                     <input
                       type="text"
                       value={formData.majority}
                       onChange={(e) => setFormData({...formData, majority: e.target.value})}
                       placeholder="例: りんご"
-                      className="w-full px-4 py-2 border-2 border-slate-200 rounded-xl focus:border-emerald-500 focus:outline-none transition-colors"
+                      className="w-full px-4 py-2 border-2 border-slate-200 rounded-xl focus:border-forest-500 focus:outline-none transition-colors"
                     />
                   </div>
 
                   <div>
                     <label className="block text-sm font-medium text-slate-700 mb-1">
-                      少数派（ウルフ）のお題 <span className="text-red-500">*</span>
+                      少数派（ウルフ）のお題 <span className="text-crimson-500">*</span>
                     </label>
                     <input
                       type="text"
                       value={formData.minority}
                       onChange={(e) => setFormData({...formData, minority: e.target.value})}
                       placeholder="例: なし"
-                      className="w-full px-4 py-2 border-2 border-slate-200 rounded-xl focus:border-emerald-500 focus:outline-none transition-colors"
+                      className="w-full px-4 py-2 border-2 border-slate-200 rounded-xl focus:border-forest-500 focus:outline-none transition-colors"
                     />
                   </div>
 
@@ -169,7 +169,7 @@ const WordManager = ({ onClose, onOpenJSONUpload }) => {
                       value={formData.category}
                       onChange={(e) => setFormData({...formData, category: e.target.value})}
                       placeholder="例: 果物"
-                      className="w-full px-4 py-2 border-2 border-slate-200 rounded-xl focus:border-emerald-500 focus:outline-none transition-colors"
+                      className="w-full px-4 py-2 border-2 border-slate-200 rounded-xl focus:border-forest-500 focus:outline-none transition-colors"
                     />
                   </div>
 
@@ -180,7 +180,7 @@ const WordManager = ({ onClose, onOpenJSONUpload }) => {
                     <select
                       value={formData.difficulty}
                       onChange={(e) => setFormData({...formData, difficulty: e.target.value})}
-                      className="w-full px-4 py-2 border-2 border-slate-200 rounded-xl focus:border-emerald-500 focus:outline-none transition-colors"
+                      className="w-full px-4 py-2 border-2 border-slate-200 rounded-xl focus:border-forest-500 focus:outline-none transition-colors"
                     >
                       <option value="easy">簡単</option>
                       <option value="medium">普通</option>
@@ -191,7 +191,7 @@ const WordManager = ({ onClose, onOpenJSONUpload }) => {
                   <div className="flex gap-2">
                     <button
                       onClick={handleAddWord}
-                      className="flex-1 bg-emerald-500 text-white font-bold py-2 px-4 rounded-xl hover:bg-emerald-600 transition-colors"
+                      className="flex-1 bg-forest-500 text-white font-bold py-2 px-4 rounded-xl hover:bg-forest-600 transition-colors"
                     >
                       追加
                     </button>
@@ -228,17 +228,17 @@ const WordManager = ({ onClose, onOpenJSONUpload }) => {
 
             {/* デフォルトに戻す */}
             {isCustom && (
-              <div className="border-2 border-red-100 rounded-2xl p-6 bg-gradient-to-br from-red-50/50 to-transparent">
-                <h3 className="font-bold text-red-800 mb-2 flex items-center gap-2">
+              <div className="border-2 border-crimson-100 rounded-2xl p-6 bg-gradient-to-br from-crimson-50/50 to-transparent">
+                <h3 className="font-bold text-crimson-800 mb-2 flex items-center gap-2">
                   <RotateCcw size={20} />
                   デフォルトお題に戻す
                 </h3>
-                <p className="text-sm text-red-600 mb-4">
+                <p className="text-sm text-crimson-600 mb-4">
                   カスタムお題を削除して、デフォルトのお題に戻します
                 </p>
                 <button
                   onClick={handleResetToDefault}
-                  className="w-full bg-red-500 text-white font-bold py-3 px-6 rounded-xl hover:bg-red-600 transition-colors"
+                  className="w-full bg-crimson-500 text-white font-bold py-3 px-6 rounded-xl hover:bg-crimson-600 transition-colors"
                 >
                   <span className="flex items-center justify-center gap-2">
                     <RotateCcw size={18} />

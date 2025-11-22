@@ -226,7 +226,15 @@ function App() {
   }, []);
 
   return (
-    <div className="min-h-screen bg-gray-100">
+    <div className="min-h-screen relative">
+      {/* 背景画像 */}
+      <div
+        className="fixed inset-0 bg-cover bg-center bg-no-repeat -z-10"
+        style={{
+          backgroundImage: 'url(/word-wolf-game-custom/background.jpg)'
+        }}
+      />
+
       {gameState.phase === GAME_PHASES.SETUP && (
         <Setup onStart={startGame} onManageWords={openWordManager} />
       )}

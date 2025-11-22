@@ -28,11 +28,11 @@ const Vote = ({ players, votes, onVote }) => {
   const allVoted = Object.keys(votes).length === players.length;
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-indigo-600 via-purple-600 to-indigo-800 flex items-center justify-center p-4 font-sans">
+    <div className="min-h-screen flex items-center justify-center p-4 font-sans">
       <div className="bg-white/95 backdrop-blur-xl rounded-3xl shadow-2xl p-8 max-w-2xl w-full border border-white/20">
         {/* タイトル */}
         <div className="text-center mb-6">
-          <h2 className="text-3xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-indigo-600 to-purple-600 mb-2">
+          <h2 className="text-3xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-muted-indigo-600 to-muted-purple-600 mb-2">
             投票タイム
           </h2>
           <p className="text-slate-600 mb-4 flex items-center justify-center gap-2">
@@ -41,8 +41,8 @@ const Vote = ({ players, votes, onVote }) => {
           </p>
 
           {/* 投票進捗 */}
-          <div className="inline-flex items-center gap-2 bg-gradient-to-r from-indigo-100 to-purple-100 px-6 py-2 rounded-full border border-indigo-200">
-            <span className="text-indigo-800 font-bold">
+          <div className="inline-flex items-center gap-2 bg-gradient-to-r from-muted-indigo-100 to-muted-purple-100 px-6 py-2 rounded-full border border-muted-indigo-200">
+            <span className="text-muted-indigo-800 font-bold">
               {Object.keys(votes).length} / {players.length} 人投票済み
             </span>
           </div>
@@ -78,8 +78,8 @@ const Vote = ({ players, votes, onVote }) => {
                       isCurrentVoter
                         ? 'bg-slate-200 text-slate-400 cursor-not-allowed'
                         : isSelected
-                        ? 'bg-gradient-to-r from-rose-500 to-pink-600 text-white shadow-lg shadow-rose-500/30 scale-105'
-                        : 'bg-white border-2 border-slate-300 text-slate-700 hover:border-rose-400 hover:shadow-md hover:scale-105'
+                        ? 'bg-gradient-to-r from-crimson-500 to-crimson-600 text-white shadow-lg shadow-crimson-500/30 scale-105'
+                        : 'bg-white border-2 border-slate-300 text-slate-700 hover:border-crimson-400 hover:shadow-md hover:scale-105'
                     }`}
                   >
                     <div className="text-lg">{player.name}</div>
@@ -98,7 +98,7 @@ const Vote = ({ players, votes, onVote }) => {
               className={`group relative w-full font-bold py-4 px-6 rounded-2xl transition-all transform shadow-lg text-lg overflow-hidden ${
                 selectedSuspect === null
                   ? 'bg-slate-300 text-slate-500 cursor-not-allowed'
-                  : 'bg-gradient-to-r from-rose-500 to-pink-600 text-white hover:from-rose-600 hover:to-pink-700 hover:scale-[1.02] active:scale-[0.98] shadow-rose-500/30'
+                  : 'bg-gradient-to-r from-crimson-500 to-crimson-600 text-white hover:from-crimson-600 hover:to-crimson-700 hover:scale-[1.02] active:scale-[0.98] shadow-crimson-500/30'
               }`}
             >
               {selectedSuspect !== null && (
@@ -112,20 +112,20 @@ const Vote = ({ players, votes, onVote }) => {
           </div>
         ) : (
           <div className="text-center space-y-6">
-            <div className="bg-gradient-to-r from-emerald-50 to-green-50 border-2 border-emerald-200 rounded-2xl p-6">
-              <p className="text-emerald-800 text-xl font-bold mb-2 flex items-center justify-center gap-2">
+            <div className="bg-gradient-to-r from-forest-50 to-forest-50 border-2 border-forest-200 rounded-2xl p-6">
+              <p className="text-forest-800 text-xl font-bold mb-2 flex items-center justify-center gap-2">
                 <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={3} d="M5 13l4 4L19 7" />
                 </svg>
                 全員が投票しました
               </p>
-              <p className="text-emerald-700">
+              <p className="text-forest-700">
                 結果を発表します...
               </p>
             </div>
 
             <div className="animate-pulse">
-              <div className="w-16 h-16 bg-gradient-to-r from-emerald-500 to-green-600 rounded-full mx-auto shadow-lg shadow-emerald-500/30"></div>
+              <div className="w-16 h-16 bg-gradient-to-r from-forest-500 to-forest-600 rounded-full mx-auto shadow-lg shadow-forest-500/30"></div>
             </div>
           </div>
         )}
