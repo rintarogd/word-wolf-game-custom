@@ -8,6 +8,8 @@ const WordDisplay = ({ currentPlayer, wordPair, onNext, totalPlayers }) => {
 
   // お題の表示
   const word = currentPlayer.isWolf ? wordPair.minority : wordPair.majority;
+  const wordDesc = currentPlayer.isWolf ? wordPair.minorityDesc : wordPair.majorityDesc;
+  const hasDescription = wordDesc !== undefined;
 
   // プレイヤーが変わったときに状態をリセット
   useEffect(() => {
@@ -90,10 +92,15 @@ const WordDisplay = ({ currentPlayer, wordPair, onNext, totalPlayers }) => {
             </div>
 
             {/* お題 */}
-            <div className="bg-gradient-to-br from-amber-100 via-yellow-100 to-amber-200 border-4 border-amber-300 rounded-2xl p-8 min-h-[200px] flex items-center justify-center shadow-inner">
-              <p className="text-5xl font-extrabold text-transparent bg-clip-text bg-gradient-to-r from-amber-700 to-yellow-700 text-center break-words">
+            <div className="bg-gradient-to-br from-amber-100 via-yellow-100 to-amber-200 border-4 border-amber-300 rounded-2xl p-8 min-h-[200px] flex flex-col items-center justify-center shadow-inner">
+              <p className="text-5xl font-extrabold text-transparent bg-clip-text bg-gradient-to-r from-amber-700 to-yellow-700 text-center break-words mb-3">
                 {word}
               </p>
+              {hasDescription && (
+                <p className="text-base font-medium text-amber-800 text-center mt-2 px-4">
+                  {wordDesc}
+                </p>
+              )}
             </div>
 
             <p className="text-center text-slate-600 text-sm animate-pulse font-medium">
