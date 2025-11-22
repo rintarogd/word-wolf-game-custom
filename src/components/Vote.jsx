@@ -1,4 +1,5 @@
 import { useState } from 'react';
+import { UserX, CheckCircle, EyeOff, AlertCircle } from 'lucide-react';
 
 const Vote = ({ players, votes, onVote }) => {
   const [currentVoterId, setCurrentVoterId] = useState(0);
@@ -35,20 +36,21 @@ const Vote = ({ players, votes, onVote }) => {
   const allVoted = Object.keys(votes).length === players.length;
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-orange-500 to-red-600 flex items-center justify-center p-4">
-      <div className="bg-white rounded-lg shadow-2xl p-8 max-w-2xl w-full">
+    <div className="min-h-screen bg-gradient-to-br from-indigo-600 via-purple-600 to-indigo-800 flex items-center justify-center p-4 font-sans">
+      <div className="bg-white/95 backdrop-blur-xl rounded-3xl shadow-2xl p-8 max-w-2xl w-full border border-white/20">
         {/* タイトル */}
         <div className="text-center mb-6">
-          <h2 className="text-3xl font-bold text-gray-800 mb-2">
+          <h2 className="text-3xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-indigo-600 to-purple-600 mb-2">
             投票タイム
           </h2>
-          <p className="text-gray-600 mb-4">
+          <p className="text-slate-600 mb-4 flex items-center justify-center gap-2">
+            <UserX size={18} />
             ウルフだと思う人に投票してください
           </p>
 
           {/* 投票進捗 */}
-          <div className="inline-block bg-orange-100 px-6 py-2 rounded-full">
-            <span className="text-orange-800 font-bold">
+          <div className="inline-flex items-center gap-2 bg-gradient-to-r from-indigo-100 to-purple-100 px-6 py-2 rounded-full border border-indigo-200">
+            <span className="text-indigo-800 font-bold">
               {Object.keys(votes).length} / {players.length} 人投票済み
             </span>
           </div>
@@ -57,11 +59,13 @@ const Vote = ({ players, votes, onVote }) => {
         {!allVoted ? (
           <div className="space-y-6">
             {/* 現在の投票者 */}
-            <div className="bg-blue-50 border-2 border-blue-300 rounded-lg p-4">
-              <p className="text-blue-800 font-bold text-lg text-center">
+            <div className="bg-gradient-to-r from-amber-50 to-yellow-50 border-2 border-amber-200 rounded-2xl p-4">
+              <p className="text-amber-800 font-bold text-lg text-center flex items-center justify-center gap-2">
+                <UserX size={20} />
                 {currentVoter.name}の投票
               </p>
-              <p className="text-blue-600 text-sm text-center mt-1">
+              <p className="text-amber-700 text-sm text-center mt-1 flex items-center justify-center gap-1">
+                <EyeOff size={16} />
                 他の人は見ないでください
               </p>
             </div>
@@ -78,12 +82,12 @@ const Vote = ({ players, votes, onVote }) => {
                     key={player.id}
                     onClick={() => !isCurrentVoter && setSelectedSuspect(player.id)}
                     disabled={isCurrentVoter}
-                    className={`p-4 rounded-lg font-medium transition-all transform ${
+                    className={`p-4 rounded-2xl font-medium transition-all transform ${
                       isCurrentVoter
-                        ? 'bg-gray-200 text-gray-400 cursor-not-allowed'
+                        ? 'bg-slate-200 text-slate-400 cursor-not-allowed'
                         : isSelected
-                        ? 'bg-gradient-to-r from-red-500 to-pink-600 text-white shadow-lg scale-105'
-                        : 'bg-white border-2 border-gray-300 text-gray-700 hover:border-red-400 hover:scale-105'
+                        ? 'bg-gradient-to-r from-rose-500 to-pink-600 text-white shadow-lg shadow-rose-500/30 scale-105'
+                        : 'bg-white border-2 border-slate-300 text-slate-700 hover:border-rose-400 hover:shadow-md hover:scale-105'
                     }`}
                   >
                     <div className="text-lg">{player.name}</div>
@@ -100,18 +104,24 @@ const Vote = ({ players, votes, onVote }) => {
               <button
                 onClick={submitVote}
                 disabled={selectedSuspect === null}
-                className={`w-full font-bold py-4 px-6 rounded-lg transition-all transform shadow-lg text-lg ${
+                className={`group relative w-full font-bold py-4 px-6 rounded-2xl transition-all transform shadow-lg text-lg overflow-hidden ${
                   selectedSuspect === null
-                    ? 'bg-gray-300 text-gray-500 cursor-not-allowed'
-                    : 'bg-gradient-to-r from-red-500 to-pink-600 text-white hover:from-red-600 hover:to-pink-700 hover:scale-105'
+                    ? 'bg-slate-300 text-slate-500 cursor-not-allowed'
+                    : 'bg-gradient-to-r from-rose-500 to-pink-600 text-white hover:from-rose-600 hover:to-pink-700 hover:scale-[1.02] active:scale-[0.98] shadow-rose-500/30'
                 }`}
               >
-                この人に投票する
+                {selectedSuspect !== null && (
+                  <div className="absolute inset-0 bg-white/20 group-hover:translate-x-full transition-transform duration-500 ease-out -skew-x-12 -translate-x-full" />
+                )}
+                <span className="relative flex items-center justify-center gap-2">
+                  <CheckCircle size={20} />
+                  この人に投票する
+                </span>
               </button>
 
               <button
                 onClick={skipVote}
-                className="w-full bg-gray-300 text-gray-700 font-medium py-2 px-4 rounded-lg hover:bg-gray-400 transition-colors text-sm"
+                className="w-full bg-slate-200 text-slate-700 font-medium py-3 px-4 rounded-2xl hover:bg-slate-300 transition-colors text-sm"
               >
                 後で投票する（スキップ）
               </button>
@@ -119,24 +129,28 @@ const Vote = ({ players, votes, onVote }) => {
           </div>
         ) : (
           <div className="text-center space-y-6">
-            <div className="bg-green-50 border-2 border-green-300 rounded-lg p-6">
-              <p className="text-green-800 text-xl font-bold mb-2">
-                ✓ 全員が投票しました
+            <div className="bg-gradient-to-r from-emerald-50 to-green-50 border-2 border-emerald-200 rounded-2xl p-6">
+              <p className="text-emerald-800 text-xl font-bold mb-2 flex items-center justify-center gap-2">
+                <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={3} d="M5 13l4 4L19 7" />
+                </svg>
+                全員が投票しました
               </p>
-              <p className="text-green-700">
+              <p className="text-emerald-700">
                 結果を発表します...
               </p>
             </div>
 
             <div className="animate-pulse">
-              <div className="w-16 h-16 bg-green-500 rounded-full mx-auto"></div>
+              <div className="w-16 h-16 bg-gradient-to-r from-emerald-500 to-green-600 rounded-full mx-auto shadow-lg shadow-emerald-500/30"></div>
             </div>
           </div>
         )}
 
         {/* 注意事項 */}
-        <div className="mt-6 pt-6 border-t border-gray-200">
-          <p className="text-xs text-gray-500 text-center">
+        <div className="mt-6 pt-6 border-t border-slate-200">
+          <p className="text-xs text-slate-500 text-center flex items-center justify-center gap-1">
+            <AlertCircle size={14} />
             匿名投票です。誰が誰に投票したかは公開されません。
           </p>
         </div>

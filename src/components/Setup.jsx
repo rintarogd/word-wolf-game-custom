@@ -1,4 +1,17 @@
 import { useState, useEffect } from 'react';
+import {
+  Users,
+  User,
+  Zap,
+  Brain,
+  Skull,
+  Settings,
+  Play,
+  ChevronDown,
+  ChevronUp,
+  BookOpen,
+  Edit3
+} from 'lucide-react';
 import { getPlayerNames, savePlayerNames } from '../utils/playerStorage';
 
 const Setup = ({ onStart, onManageWords }) => {
@@ -8,6 +21,7 @@ const Setup = ({ onStart, onManageWords }) => {
   const [error, setError] = useState('');
   const [showNameSettings, setShowNameSettings] = useState(false);
   const [playerNames, setPlayerNames] = useState([]);
+  const [showRules, setShowRules] = useState(false);
 
   // プレイヤー名をロード
   useEffect(() => {
@@ -76,216 +90,303 @@ const Setup = ({ onStart, onManageWords }) => {
     }
   };
 
+  // 難易度の設定データ
+  const difficulties = [
+    { id: 'easy', label: '簡単', icon: <Zap size={18} />, color: 'bg-emerald-500', ring: 'ring-emerald-500/20', text: 'text-emerald-600' },
+    { id: 'medium', label: '普通', icon: <Brain size={18} />, color: 'bg-blue-500', ring: 'ring-blue-500/20', text: 'text-blue-600' },
+    { id: 'hard', label: '難しい', icon: <Skull size={18} />, color: 'bg-rose-500', ring: 'ring-rose-500/20', text: 'text-rose-600' }
+  ];
+
   return (
-    <div className="min-h-screen bg-gradient-to-br from-blue-500 to-purple-600 flex items-center justify-center p-4">
-      <div className="bg-white rounded-lg shadow-2xl p-8 max-w-md w-full">
-        {!showNameSettings ? (
-          <>
-            <h1 className="text-3xl font-bold text-center text-gray-800 mb-2">
-              ワードウルフ
-            </h1>
-            <p className="text-center text-gray-600 mb-8">
-              みんなで楽しむ推理ゲーム
-            </p>
-
-        <div className="space-y-6">
-          {/* プレイヤー人数 */}
-          <div>
-            <label className="block text-sm font-medium text-gray-700 mb-2">
-              プレイヤー人数
-            </label>
-            <div className="flex items-center space-x-4">
-              <button
-                onClick={() => setPlayerCount(Math.max(3, playerCount - 1))}
-                className="w-12 h-12 bg-gray-200 hover:bg-gray-300 rounded-lg font-bold text-xl transition-colors"
-              >
-                -
-              </button>
-              <div className="flex-1 text-center">
-                <span className="text-4xl font-bold text-blue-600">{playerCount}</span>
-                <span className="text-gray-600 ml-1">人</span>
-              </div>
-              <button
-                onClick={() => setPlayerCount(Math.min(8, playerCount + 1))}
-                className="w-12 h-12 bg-gray-200 hover:bg-gray-300 rounded-lg font-bold text-xl transition-colors"
-              >
-                +
-              </button>
-            </div>
-            <p className="text-xs text-gray-500 mt-2 text-center">
-              3人〜8人まで設定できます
-            </p>
-          </div>
-
-          {/* ウルフ人数 */}
-          <div>
-            <label className="block text-sm font-medium text-gray-700 mb-2">
-              ウルフの人数
-            </label>
-            <div className="flex items-center space-x-4">
-              <button
-                onClick={() => setWolfCount(Math.max(1, wolfCount - 1))}
-                className="w-12 h-12 bg-gray-200 hover:bg-gray-300 rounded-lg font-bold text-xl transition-colors"
-              >
-                -
-              </button>
-              <div className="flex-1 text-center">
-                <span className="text-4xl font-bold text-red-600">{wolfCount}</span>
-                <span className="text-gray-600 ml-1">人</span>
-              </div>
-              <button
-                onClick={() => setWolfCount(Math.min(Math.floor(playerCount / 3), wolfCount + 1))}
-                className="w-12 h-12 bg-gray-200 hover:bg-gray-300 rounded-lg font-bold text-xl transition-colors"
-              >
-                +
-              </button>
-            </div>
-            <p className="text-xs text-gray-500 mt-2 text-center">
-              プレイヤー数の1/3以下（最大{Math.floor(playerCount / 3)}人）
-            </p>
-          </div>
-
-          {/* 難易度 */}
-          <div>
-            <label className="block text-sm font-medium text-gray-700 mb-2">
-              難易度
-            </label>
-            <div className="grid grid-cols-3 gap-2">
-              <button
-                onClick={() => setDifficulty('easy')}
-                className={`py-3 px-4 rounded-lg font-medium transition-all ${
-                  difficulty === 'easy'
-                    ? 'bg-green-500 text-white shadow-lg scale-105'
-                    : 'bg-gray-200 text-gray-700 hover:bg-gray-300'
-                }`}
-              >
-                簡単
-              </button>
-              <button
-                onClick={() => setDifficulty('medium')}
-                className={`py-3 px-4 rounded-lg font-medium transition-all ${
-                  difficulty === 'medium'
-                    ? 'bg-yellow-500 text-white shadow-lg scale-105'
-                    : 'bg-gray-200 text-gray-700 hover:bg-gray-300'
-                }`}
-              >
-                普通
-              </button>
-              <button
-                onClick={() => setDifficulty('hard')}
-                className={`py-3 px-4 rounded-lg font-medium transition-all ${
-                  difficulty === 'hard'
-                    ? 'bg-red-500 text-white shadow-lg scale-105'
-                    : 'bg-gray-200 text-gray-700 hover:bg-gray-300'
-                }`}
-              >
-                難しい
-              </button>
-            </div>
-          </div>
-
-          {/* エラーメッセージ */}
-          {error && (
-            <div className="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded-lg">
-              {error}
-            </div>
-          )}
-
-          {/* ゲーム開始ボタン */}
-          <button
-            onClick={validateAndStart}
-            className="w-full bg-gradient-to-r from-blue-500 to-purple-600 text-white font-bold py-4 px-6 rounded-lg hover:from-blue-600 hover:to-purple-700 transition-all transform hover:scale-105 shadow-lg text-lg"
-          >
-            ゲーム開始
-          </button>
-
-          {/* プレイヤー名設定ボタン */}
-          <button
-            onClick={() => setShowNameSettings(true)}
-            className="w-full bg-white border-2 border-blue-500 text-blue-500 font-medium py-3 px-6 rounded-lg hover:bg-blue-50 transition-all"
-          >
-            👤 プレイヤー名を設定
-          </button>
-        </div>
-
-        {/* ゲームルール */}
-        <div className="mt-8 pt-6 border-t border-gray-200">
-          <h3 className="font-bold text-gray-800 mb-2">ゲームルール</h3>
-          <ul className="text-sm text-gray-600 space-y-1">
-            <li>• 多数派と少数派（ウルフ）で違うお題が配られます</li>
-            <li>• お題について話し合い、ウルフを見つけましょう</li>
-            <li>• 投票でウルフを当てられれば市民の勝利です</li>
-          </ul>
-        </div>
-
-        {/* お題管理ボタン */}
-        <button
-          onClick={onManageWords}
-          className="w-full mt-4 bg-gray-200 text-gray-700 font-medium py-3 px-6 rounded-lg hover:bg-gray-300 transition-all"
-        >
-          ⚙️ お題を管理
-        </button>
-          </>
-        ) : (
-          <>
-            {/* プレイヤー名設定画面 */}
-            <div className="flex items-center justify-between mb-6">
-              <h2 className="text-2xl font-bold text-gray-800">プレイヤー名設定</h2>
-              <button
-                onClick={() => setShowNameSettings(false)}
-                className="text-gray-600 hover:text-gray-800 font-medium"
-              >
-                ✕ 閉じる
-              </button>
-            </div>
-
-            <div className="flex items-center justify-between mb-6">
-              <p className="text-sm text-gray-600">
-                最大8人分のプレイヤー名を設定できます。設定した名前は次回以降も使用されます。
+    <>
+      <div className="min-h-screen bg-gradient-to-br from-indigo-600 via-purple-600 to-indigo-800 flex items-center justify-center p-4 font-sans text-slate-800">
+        <div className="w-full max-w-md bg-white/95 backdrop-blur-xl rounded-3xl shadow-2xl overflow-hidden border border-white/20">
+            {/* ヘッダーエリア */}
+            <div className="pt-8 pb-6 px-6 text-center bg-gradient-to-b from-indigo-50/50 to-transparent">
+              <h1 className="text-3xl font-extrabold text-transparent bg-clip-text bg-gradient-to-r from-indigo-600 to-purple-600 tracking-tight mb-2">
+                ワードウルフ
+              </h1>
+              <p className="text-slate-500 text-sm font-medium">
+                みんなで楽しむ推理ゲーム
               </p>
-              <button
-                onClick={clearAllNames}
-                className="text-sm text-red-600 hover:text-red-700 font-medium whitespace-nowrap ml-4"
-              >
-                すべてクリア
-              </button>
             </div>
 
-            <div className="space-y-3 max-h-[60vh] overflow-y-auto mb-6">
-              {playerNames.map((name, index) => (
-                <div key={index}>
-                  <label className="block text-sm font-medium text-gray-700 mb-1">
-                    プレイヤー{index + 1}
-                  </label>
-                  <input
-                    type="text"
-                    value={name}
-                    onChange={(e) => updatePlayerName(index, e.target.value)}
-                    placeholder={`プレイヤー${index + 1}`}
-                    className="w-full px-4 py-2 border-2 border-gray-300 rounded-lg focus:border-blue-500 focus:outline-none"
-                  />
+            <div className="p-6 space-y-8">
+              {/* エラーメッセージ */}
+              {error && (
+                <div className="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded-lg text-sm">
+                  {error}
                 </div>
-              ))}
+              )}
+
+              {/* 設定カード: 人数 */}
+              <div className="space-y-6">
+                {/* プレイヤー人数 */}
+                <div className="bg-slate-50 rounded-2xl p-4 border border-slate-100 shadow-sm">
+                  <div className="flex justify-between items-center mb-4">
+                    <label className="text-sm font-bold text-slate-700 flex items-center gap-2">
+                      <Users className="text-indigo-500" size={18} />
+                      プレイヤー人数
+                    </label>
+                    <span className="text-xs font-bold text-indigo-500 bg-indigo-50 px-2 py-1 rounded-md">
+                      合計
+                    </span>
+                  </div>
+
+                  <div className="flex items-center justify-between">
+                    <button
+                      onClick={() => setPlayerCount(Math.max(3, playerCount - 1))}
+                      className="w-12 h-12 rounded-xl bg-white border border-slate-200 shadow-sm flex items-center justify-center text-slate-600 hover:bg-slate-50 hover:scale-95 active:scale-90 transition-all text-xl font-bold"
+                    >
+                      -
+                    </button>
+                    <div className="flex flex-col items-center">
+                      <span className="text-3xl font-extrabold text-slate-800 leading-none">
+                        {playerCount}<span className="text-sm font-medium text-slate-400 ml-1">人</span>
+                      </span>
+                      <span className="text-[10px] text-slate-400 mt-1 font-medium">3〜8人で設定</span>
+                    </div>
+                    <button
+                      onClick={() => setPlayerCount(Math.min(8, playerCount + 1))}
+                      className="w-12 h-12 rounded-xl bg-white border border-slate-200 shadow-sm flex items-center justify-center text-slate-600 hover:bg-slate-50 hover:scale-95 active:scale-90 transition-all text-xl font-bold"
+                    >
+                      +
+                    </button>
+                  </div>
+                </div>
+
+                {/* ウルフ人数 */}
+                <div className="bg-slate-50 rounded-2xl p-4 border border-slate-100 shadow-sm">
+                  <div className="flex justify-between items-center mb-4">
+                    <label className="text-sm font-bold text-slate-700 flex items-center gap-2">
+                      <User className="text-pink-500" size={18} />
+                      ウルフの人数
+                    </label>
+                    <span className="text-xs font-bold text-pink-500 bg-pink-50 px-2 py-1 rounded-md">
+                      少数派
+                    </span>
+                  </div>
+
+                  <div className="flex items-center justify-between">
+                    <button
+                      onClick={() => setWolfCount(Math.max(1, wolfCount - 1))}
+                      className="w-12 h-12 rounded-xl bg-white border border-slate-200 shadow-sm flex items-center justify-center text-slate-600 hover:bg-slate-50 hover:scale-95 active:scale-90 transition-all text-xl font-bold"
+                    >
+                      -
+                    </button>
+                    <div className="flex flex-col items-center">
+                      <span className="text-3xl font-extrabold text-slate-800 leading-none">
+                        {wolfCount}<span className="text-sm font-medium text-slate-400 ml-1">人</span>
+                      </span>
+                      <span className="text-[10px] text-slate-400 mt-1 font-medium">プレイヤー数の1/3以下</span>
+                    </div>
+                    <button
+                      onClick={() => setWolfCount(Math.min(Math.floor(playerCount/3), wolfCount + 1))}
+                      className="w-12 h-12 rounded-xl bg-white border border-slate-200 shadow-sm flex items-center justify-center text-slate-600 hover:bg-slate-50 hover:scale-95 active:scale-90 transition-all text-xl font-bold"
+                    >
+                      +
+                    </button>
+                  </div>
+                </div>
+              </div>
+
+              {/* 難易度設定 */}
+              <div className="space-y-3">
+                <label className="text-sm font-bold text-slate-700 pl-1">難易度</label>
+                <div className="grid grid-cols-3 gap-2 bg-slate-100 p-1.5 rounded-2xl">
+                  {difficulties.map((d) => (
+                    <button
+                      key={d.id}
+                      onClick={() => setDifficulty(d.id)}
+                      className={`
+                        relative flex flex-col items-center justify-center py-3 rounded-xl text-sm font-bold transition-all duration-200
+                        ${difficulty === d.id
+                          ? 'bg-white shadow-md text-slate-800 scale-100'
+                          : 'text-slate-400 hover:text-slate-600 hover:bg-slate-200/50 scale-95'}
+                      `}
+                    >
+                      <span className={`mb-1 transition-colors ${difficulty === d.id ? d.text : ''}`}>
+                        {d.icon}
+                      </span>
+                      {d.label}
+
+                      {/* アクティブ時のインジケーター */}
+                      {difficulty === d.id && (
+                        <span className={`absolute inset-0 rounded-xl ring-2 ${d.ring}`} />
+                      )}
+                    </button>
+                  ))}
+                </div>
+                <p className="text-center text-xs text-slate-400 font-medium pt-1">
+                  お題の抽象度が変わります
+                </p>
+              </div>
+
+              {/* メインアクション */}
+              <div className="space-y-4 pt-2">
+                <button
+                  onClick={validateAndStart}
+                  className="group relative w-full py-4 bg-gradient-to-r from-indigo-600 to-purple-600 rounded-2xl text-white font-bold text-lg shadow-lg shadow-indigo-500/30 overflow-hidden transform transition-all hover:scale-[1.02] active:scale-[0.98]"
+                >
+                  <div className="absolute inset-0 bg-white/20 group-hover:translate-x-full transition-transform duration-500 ease-out -skew-x-12 -translate-x-full" />
+                  <span className="relative flex items-center justify-center gap-2">
+                    <Play size={22} fill="currentColor" />
+                    ゲーム開始
+                  </span>
+                </button>
+
+                <button
+                  onClick={() => setShowNameSettings(true)}
+                  className="w-full py-3.5 bg-white border-2 border-indigo-100 text-indigo-600 rounded-2xl font-bold text-base hover:bg-indigo-50 hover:border-indigo-200 transition-colors flex items-center justify-center gap-2"
+                >
+                  <Edit3 size={18} />
+                  プレイヤー名を設定
+                </button>
+              </div>
             </div>
 
-            <div className="flex gap-3">
+            {/* フッター / その他の機能 */}
+            <div className="border-t border-slate-100 divide-y divide-slate-100 bg-slate-50">
+              {/* ゲームルール（アコーディオン） */}
               <button
-                onClick={saveNames}
-                className="flex-1 bg-gradient-to-r from-blue-500 to-purple-600 text-white font-bold py-3 px-6 rounded-lg hover:from-blue-600 hover:to-purple-700 transition-all"
+                onClick={() => setShowRules(!showRules)}
+                className="w-full px-6 py-4 flex items-center justify-between text-slate-600 font-bold text-sm hover:bg-slate-100 transition-colors"
               >
-                保存
+                <span className="flex items-center gap-2">
+                  <BookOpen size={18} className="text-slate-400" />
+                  ゲームルール
+                </span>
+                {showRules ? <ChevronUp size={18} /> : <ChevronDown size={18} />}
               </button>
+
+              {showRules && (
+                <div className="px-6 py-4 bg-slate-100/50 text-sm text-slate-600 leading-relaxed space-y-4 animate-fade-in">
+                  <div>
+                    <h3 className="font-bold text-indigo-600 mb-1 flex items-center gap-2">
+                      ワードウルフとは
+                    </h3>
+                    <p className="text-xs leading-5">
+                      全員に話すテーマ（お題）が与えられますが、一人だけ異なるお題を与えられた人がいます。この異なるお題を与えられた少数派を「ワードウルフ」と呼びます。
+                    </p>
+                  </div>
+
+                  <div className="bg-white p-3 rounded-lg border border-slate-200">
+                    <h3 className="font-bold text-indigo-600 mb-1 text-xs flex items-center gap-1">
+                      <Users size={14} /> 多数派（市民）の目的
+                    </h3>
+                    <p className="text-xs">会話を通じてワードウルフを見つけ出し、投票で特定することが目標です。</p>
+                  </div>
+
+                  <div className="bg-white p-3 rounded-lg border border-slate-200">
+                    <h3 className="font-bold text-pink-500 mb-1 text-xs flex items-center gap-1">
+                      <User size={14} /> 少数派（ワードウルフ）の目的
+                    </h3>
+                    <p className="text-xs">会話の流れで自分がワードウルフだと気づいたら、他のプレイヤーに合わせて会話をし、正体がばれないように立ち回ります。投票で自分への投票を回避できれば勝利です。</p>
+                  </div>
+
+                  <div>
+                    <h3 className="font-bold text-slate-700 mb-2 text-xs">勝利条件</h3>
+                    <ul className="space-y-2">
+                      <li className="flex items-center gap-2 text-xs bg-indigo-50 p-2 rounded border border-indigo-100">
+                        <span className="w-1.5 h-1.5 rounded-full bg-indigo-500 flex-shrink-0"></span>
+                        投票でウルフを当てた <span className="text-slate-400 mx-1">→</span> <span className="font-bold text-indigo-600">多数派の勝利</span>
+                      </li>
+                      <li className="flex items-center gap-2 text-xs bg-pink-50 p-2 rounded border border-pink-100">
+                        <span className="w-1.5 h-1.5 rounded-full bg-pink-500 flex-shrink-0"></span>
+                        ウルフを当てられなかった <span className="text-slate-400 mx-1">→</span> <span className="font-bold text-pink-500">ウルフの勝利</span>
+                      </li>
+                    </ul>
+                  </div>
+                </div>
+              )}
+
+              {/* お題管理 */}
               <button
-                onClick={() => setShowNameSettings(false)}
-                className="flex-1 bg-gray-300 text-gray-700 font-medium py-3 px-6 rounded-lg hover:bg-gray-400 transition-all"
+                onClick={onManageWords}
+                className="w-full px-6 py-4 flex items-center justify-center gap-2 text-slate-500 font-bold text-sm hover:text-slate-700 hover:bg-slate-100 transition-colors"
               >
-                キャンセル
+                <Settings size={16} />
+                お題を管理
               </button>
             </div>
-          </>
-        )}
+        </div>
       </div>
-    </div>
+
+      {/* プレイヤー名設定モーダル */}
+      {showNameSettings && (
+        <>
+          {/* モーダルオーバーレイ背景 */}
+          <div
+            className="fixed inset-0 bg-black bg-opacity-50 z-40"
+            onClick={() => setShowNameSettings(false)}
+          />
+
+          {/* プレイヤー名設定画面（モーダル） */}
+          <div className="fixed inset-0 flex items-center justify-center z-50 p-4">
+            <div className="bg-white rounded-3xl shadow-2xl p-8 max-w-md w-full max-h-[85vh] overflow-hidden flex flex-col">
+              <div className="flex items-center justify-between mb-4">
+                <h2 className="text-2xl font-bold text-slate-800">プレイヤー名設定</h2>
+                <button
+                  onClick={() => setShowNameSettings(false)}
+                  className="text-slate-600 hover:text-slate-800 font-medium"
+                >
+                  ✕ 閉じる
+                </button>
+              </div>
+
+              <div className="flex items-center justify-between mb-4 pb-4 border-b border-slate-100">
+                <p className="text-sm text-slate-600">
+                  最大8人分のプレイヤー名を設定できます。
+                </p>
+                <button
+                  onClick={clearAllNames}
+                  className="text-sm text-red-600 hover:text-red-700 font-medium whitespace-nowrap ml-4"
+                >
+                  すべてクリア
+                </button>
+              </div>
+
+              <div className="space-y-3 overflow-y-auto mb-4 flex-1 pr-2">
+                {playerNames.map((name, index) => (
+                  <div key={index}>
+                    <label className="block text-sm font-medium text-slate-700 mb-1">
+                      プレイヤー{index + 1}
+                    </label>
+                    <input
+                      type="text"
+                      value={name}
+                      onChange={(e) => updatePlayerName(index, e.target.value)}
+                      placeholder={`プレイヤー${index + 1}`}
+                      className="w-full px-4 py-2 border-2 border-slate-200 rounded-xl focus:border-indigo-500 focus:outline-none transition-colors"
+                    />
+                  </div>
+                ))}
+              </div>
+
+              <div className="flex gap-3">
+                <button
+                  onClick={saveNames}
+                  className="flex-1 bg-gradient-to-r from-indigo-600 to-purple-600 text-white font-bold py-3 px-6 rounded-2xl hover:from-indigo-700 hover:to-purple-700 transition-all"
+                >
+                  保存
+                </button>
+                <button
+                  onClick={() => setShowNameSettings(false)}
+                  className="flex-1 bg-slate-200 text-slate-700 font-medium py-3 px-6 rounded-2xl hover:bg-slate-300 transition-all"
+                >
+                  キャンセル
+                </button>
+              </div>
+            </div>
+          </div>
+        </>
+      )}
+
+      <style>{`
+        @keyframes fadeIn { from { opacity: 0; transform: translateY(-5px); } to { opacity: 1; transform: translateY(0); } }
+        .animate-fade-in { animation: fadeIn 0.2s ease-out forwards; }
+      `}</style>
+    </>
   );
 };
 

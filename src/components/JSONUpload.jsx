@@ -1,4 +1,5 @@
 import { useState, useRef } from 'react';
+import { ArrowLeft, Upload, Download, FileJson } from 'lucide-react';
 import {
   getCustomWords,
   saveCustomWords,
@@ -59,100 +60,120 @@ const JSONUpload = ({ onBack }) => {
   };
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-blue-500 to-cyan-600 flex items-center justify-center p-4">
-      <div className="bg-white rounded-lg shadow-2xl p-8 max-w-2xl w-full">
-        {/* ヘッダー */}
-        <div className="flex items-center justify-between mb-6">
-          <h2 className="text-3xl font-bold text-gray-800">JSONファイルから読み込み</h2>
-          <button
-            onClick={onBack}
-            className="text-gray-600 hover:text-gray-800 font-medium"
-          >
-            ← 戻る
-          </button>
-        </div>
+    <>
+      {/* モーダルオーバーレイ背景 */}
+      <div
+        className="fixed inset-0 bg-black bg-opacity-50 z-40"
+        onClick={onBack}
+      />
 
-        {/* 説明 */}
-        <div className="bg-blue-50 border-2 border-blue-300 rounded-lg p-4 mb-6">
-          <p className="text-blue-800 font-medium mb-2">
-            お題が記載されたJSONファイルをアップロードしてください
-          </p>
-          <p className="text-blue-600 text-sm">
-            複数のお題を一度に登録したい場合に便利です
-          </p>
-        </div>
-
-        {/* メッセージ */}
-        {error && (
-          <div className="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded-lg mb-4">
-            {error}
+      {/* JSONアップロード画面（モーダル） */}
+      <div className="fixed inset-0 flex items-center justify-center z-50 p-4">
+        <div className="bg-white rounded-3xl shadow-2xl p-8 max-w-2xl w-full max-h-[90vh] overflow-y-auto">
+          {/* ヘッダー */}
+          <div className="flex items-center justify-between mb-6">
+            <h2 className="text-3xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-indigo-600 to-purple-600">JSONファイル管理</h2>
+            <button
+              onClick={onBack}
+              className="text-slate-600 hover:text-slate-800 font-medium flex items-center gap-2"
+            >
+              <ArrowLeft size={20} />
+              戻る
+            </button>
           </div>
-        )}
 
-        {success && (
-          <div className="bg-green-100 border border-green-400 text-green-700 px-4 py-3 rounded-lg mb-4">
-            {success}
+          {/* 説明 */}
+          <div className="bg-gradient-to-r from-blue-50 to-cyan-50 border-2 border-blue-100 rounded-2xl p-4 mb-6">
+            <p className="text-blue-800 font-medium mb-2 flex items-center gap-2">
+              <FileJson size={20} />
+              お題が記載されたJSONファイルをアップロードしてください
+            </p>
+            <p className="text-blue-600 text-sm">
+              複数のお題を一度に登録したい場合に便利です
+            </p>
           </div>
-        )}
 
-        {/* アップロードエリア */}
-        <div className="border-4 border-dashed border-blue-300 rounded-lg p-8 mb-6 text-center">
-          <input
-            ref={fileInputRef}
-            type="file"
-            accept=".json"
-            onChange={handleFileUpload}
-            className="hidden"
-          />
-          <div className="mb-4">
-            <svg className="mx-auto h-12 w-12 text-blue-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M7 16a4 4 0 01-.88-7.903A5 5 0 1115.9 6L16 6a5 5 0 011 9.9M15 13l-3-3m0 0l-3 3m3-3v12" />
-            </svg>
-          </div>
-          <button
-            onClick={() => fileInputRef.current?.click()}
-            className="bg-gradient-to-r from-blue-500 to-cyan-600 text-white font-bold py-4 px-8 rounded-lg hover:from-blue-600 hover:to-cyan-700 transition-all transform hover:scale-105 shadow-lg text-lg"
-          >
-            📁 JSONファイルを選択
-          </button>
-          <p className="text-gray-500 text-sm mt-4">
-            .json形式のファイルのみアップロード可能です
-          </p>
-        </div>
-
-        {/* ダウンロード */}
-        <div className="border-2 border-gray-200 rounded-lg p-6 mb-6">
-          <h3 className="font-bold text-gray-800 mb-3">お題のダウンロード</h3>
-          <div className="space-y-3">
-            <div>
-              <p className="text-sm text-gray-600 mb-2">
-                現在のお題をJSONファイルとして保存
-              </p>
-              <button
-                onClick={handleDownloadCurrent}
-                className="w-full bg-gradient-to-r from-purple-500 to-pink-600 text-white font-bold py-3 px-4 rounded-lg hover:from-purple-600 hover:to-pink-700 transition-all transform hover:scale-105 shadow-lg"
-              >
-                💾 現在のお題をダウンロード
-              </button>
+          {/* メッセージ */}
+          {error && (
+            <div className="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded-lg mb-4">
+              {error}
             </div>
-            <div className="border-t border-gray-200 pt-3">
-              <p className="text-sm text-gray-600 mb-2">
-                JSONファイルの形式がわからない場合はサンプルを参照
-              </p>
-              <button
-                onClick={handleDownloadSample}
-                className="w-full bg-gray-200 text-gray-700 font-medium py-3 px-4 rounded-lg hover:bg-gray-300 transition-colors"
-              >
-                📝 サンプルをダウンロード
-              </button>
+          )}
+
+          {success && (
+            <div className="bg-green-100 border border-green-400 text-green-700 px-4 py-3 rounded-lg mb-4">
+              {success}
+            </div>
+          )}
+
+          {/* アップロードエリア */}
+          <div className="border-4 border-dashed border-blue-200 rounded-2xl p-8 mb-6 text-center bg-gradient-to-br from-blue-50/30 to-transparent hover:border-blue-300 transition-colors">
+            <input
+              ref={fileInputRef}
+              type="file"
+              accept=".json"
+              onChange={handleFileUpload}
+              className="hidden"
+            />
+            <div className="mb-4">
+              <Upload className="mx-auto h-12 w-12 text-blue-400" />
+            </div>
+            <button
+              onClick={() => fileInputRef.current?.click()}
+              className="bg-gradient-to-r from-blue-500 to-cyan-600 text-white font-bold py-4 px-8 rounded-2xl hover:from-blue-600 hover:to-cyan-700 transition-all transform hover:scale-[1.02] shadow-lg text-lg"
+            >
+              <span className="flex items-center justify-center gap-2">
+                <FileJson size={22} />
+                JSONファイルを選択
+              </span>
+            </button>
+            <p className="text-slate-500 text-sm mt-4">
+              .json形式のファイルのみアップロード可能です
+            </p>
+          </div>
+
+          {/* ダウンロード */}
+          <div className="border-2 border-slate-100 rounded-2xl p-6 mb-6 bg-gradient-to-br from-slate-50/50 to-transparent">
+            <h3 className="font-bold text-slate-800 mb-3 flex items-center gap-2">
+              <Download size={20} className="text-slate-600" />
+              お題のダウンロード
+            </h3>
+            <div className="space-y-3">
+              <div>
+                <p className="text-sm text-slate-600 mb-2">
+                  現在のお題をJSONファイルとして保存
+                </p>
+                <button
+                  onClick={handleDownloadCurrent}
+                  className="w-full bg-gradient-to-r from-purple-500 to-pink-600 text-white font-bold py-3 px-4 rounded-xl hover:from-purple-600 hover:to-pink-700 transition-all transform hover:scale-[1.02] shadow-lg"
+                >
+                  <span className="flex items-center justify-center gap-2">
+                    <Download size={18} />
+                    現在のお題をダウンロード
+                  </span>
+                </button>
+              </div>
+              <div className="border-t border-slate-200 pt-3">
+                <p className="text-sm text-slate-600 mb-2">
+                  JSONファイルの形式がわからない場合はサンプルを参照
+                </p>
+                <button
+                  onClick={handleDownloadSample}
+                  className="w-full bg-slate-200 text-slate-700 font-medium py-3 px-4 rounded-xl hover:bg-slate-300 transition-colors"
+                >
+                  <span className="flex items-center justify-center gap-2">
+                    <FileJson size={18} />
+                    サンプルをダウンロード
+                  </span>
+                </button>
+              </div>
             </div>
           </div>
-        </div>
 
-        {/* JSON形式の説明 */}
-        <div className="border-t border-gray-200 pt-6">
-          <h3 className="font-bold text-gray-800 mb-2">JSONファイルの形式</h3>
-          <pre className="bg-gray-100 p-4 rounded-lg text-xs overflow-x-auto">
+          {/* JSON形式の説明 */}
+          <div className="border-t border-slate-200 pt-6">
+            <h3 className="font-bold text-slate-800 mb-2">JSONファイルの形式</h3>
+            <pre className="bg-slate-100 p-4 rounded-xl text-xs overflow-x-auto">
 {`[
   {
     "id": 1,
@@ -169,27 +190,28 @@ const JSONUpload = ({ onBack }) => {
     "difficulty": "easy"
   }
 ]`}
-          </pre>
-          <div className="mt-4 space-y-2 text-sm">
-            <p className="text-gray-700">
-              <span className="font-bold text-red-600">必須項目:</span>
-            </p>
-            <ul className="list-disc list-inside text-gray-600 space-y-1 ml-4">
-              <li><code className="bg-gray-200 px-1 rounded">id</code> (数値): 一意のID</li>
-              <li><code className="bg-gray-200 px-1 rounded">majority</code> (文字列): 多数派のお題</li>
-              <li><code className="bg-gray-200 px-1 rounded">minority</code> (文字列): 少数派（ウルフ）のお題</li>
-            </ul>
-            <p className="text-gray-700 mt-3">
-              <span className="font-bold text-blue-600">任意項目:</span>
-            </p>
-            <ul className="list-disc list-inside text-gray-600 space-y-1 ml-4">
-              <li><code className="bg-gray-200 px-1 rounded">category</code> (文字列): カテゴリ</li>
-              <li><code className="bg-gray-200 px-1 rounded">difficulty</code> (文字列): 難易度 (easy/medium/hard)</li>
-            </ul>
+            </pre>
+            <div className="mt-4 space-y-2 text-sm">
+              <p className="text-slate-700">
+                <span className="font-bold text-red-600">必須項目:</span>
+              </p>
+              <ul className="list-disc list-inside text-slate-600 space-y-1 ml-4">
+                <li><code className="bg-slate-200 px-1 rounded">id</code> (数値): 一意のID</li>
+                <li><code className="bg-slate-200 px-1 rounded">majority</code> (文字列): 多数派のお題</li>
+                <li><code className="bg-slate-200 px-1 rounded">minority</code> (文字列): 少数派（ウルフ）のお題</li>
+              </ul>
+              <p className="text-slate-700 mt-3">
+                <span className="font-bold text-blue-600">任意項目:</span>
+              </p>
+              <ul className="list-disc list-inside text-slate-600 space-y-1 ml-4">
+                <li><code className="bg-slate-200 px-1 rounded">category</code> (文字列): カテゴリ</li>
+                <li><code className="bg-slate-200 px-1 rounded">difficulty</code> (文字列): 難易度 (easy/medium/hard)</li>
+              </ul>
+            </div>
           </div>
         </div>
       </div>
-    </div>
+    </>
   );
 };
 
