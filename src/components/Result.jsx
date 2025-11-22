@@ -34,16 +34,16 @@ const Result = ({ players, votes, wolfIndices, wordPair, onPlayAgain, onNewWord 
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-indigo-600 via-purple-600 to-indigo-800 flex items-center justify-center p-4 font-sans">
-      <div className="bg-white/95 backdrop-blur-xl rounded-3xl shadow-2xl p-8 max-w-2xl w-full max-h-[90vh] overflow-y-auto border border-white/20">
+      <div className="bg-white/95 backdrop-blur-xl rounded-3xl shadow-2xl p-4 lg:p-6 max-w-6xl w-full border border-white/20">
         {/* 勝敗表示 */}
-        <div className="text-center mb-8">
-          <div className={`inline-flex items-center gap-3 px-8 py-4 rounded-full mb-4 shadow-lg ${
+        <div className="text-center mb-3 lg:mb-4">
+          <div className={`inline-flex items-center gap-2 px-6 py-3 rounded-full mb-3 shadow-lg ${
             isCitizenWin
               ? 'bg-gradient-to-r from-emerald-500 to-green-600 shadow-emerald-500/30'
               : 'bg-gradient-to-r from-rose-500 to-pink-600 shadow-rose-500/30'
           }`}>
-            <Trophy className="text-white" size={32} />
-            <h2 className="text-4xl font-bold text-white">
+            <Trophy className="text-white" size={24} />
+            <h2 className="text-2xl font-bold text-white whitespace-nowrap">
               {isCitizenWin ? '市民の勝利！' : 'ウルフの勝利！'}
             </h2>
           </div>
@@ -55,12 +55,14 @@ const Result = ({ players, votes, wolfIndices, wordPair, onPlayAgain, onNewWord 
           </p>
         </div>
 
-        {/* 投票結果 */}
-        <div className="mb-8">
-          <h3 className="text-xl font-bold text-slate-800 mb-4 text-center">
-            投票結果
-          </h3>
-          <div className="space-y-3">
+        {/* メインコンテンツ - 2カラムレイアウト */}
+        <div className="lg:grid lg:grid-cols-2 lg:gap-4">
+          {/* 左カラム: 投票結果 */}
+          <div className="mb-3 lg:mb-0">
+            <h3 className="text-lg font-bold text-slate-800 mb-2 text-center">
+              投票結果
+            </h3>
+            <div className="space-y-1.5">
             {voteResults.map((result, index) => {
               const isWolf = wolfIndices.includes(result.player.id);
               const isMostVoted = result.voteCount === maxVotes;
@@ -68,7 +70,7 @@ const Result = ({ players, votes, wolfIndices, wordPair, onPlayAgain, onNewWord 
               return (
                 <div
                   key={result.player.id}
-                  className={`p-4 rounded-2xl border-2 transition-all ${
+                  className={`p-2 rounded-2xl border-2 transition-all ${
                     isMostVoted
                       ? 'bg-slate-100 border-slate-300 shadow-md'
                       : 'bg-white border-slate-200'
@@ -95,7 +97,7 @@ const Result = ({ players, votes, wolfIndices, wordPair, onPlayAgain, onNewWord 
                       </div>
                     </div>
                     <div className="text-right">
-                      <div className="text-3xl font-bold text-slate-800">
+                      <div className="text-2xl font-bold text-slate-800">
                         {result.voteCount}
                       </div>
                       <div className="text-sm text-slate-600">票</div>
@@ -104,16 +106,18 @@ const Result = ({ players, votes, wolfIndices, wordPair, onPlayAgain, onNewWord 
                 </div>
               );
             })}
+            </div>
           </div>
-        </div>
 
-        {/* お題の公開 */}
-        <div className="mb-8">
-          <h3 className="text-xl font-bold text-slate-800 mb-4 text-center">
+          {/* 右カラム: お題と役割 */}
+          <div className="space-y-3">
+            {/* お題の公開 */}
+            <div>
+          <h3 className="text-lg font-bold text-slate-800 mb-2 text-center">
             お題の公開
           </h3>
-          <div className="grid grid-cols-2 gap-4">
-            <div className="bg-slate-100 border-2 border-slate-300 rounded-2xl p-4">
+          <div className="grid grid-cols-2 gap-3">
+            <div className="bg-slate-100 border-2 border-slate-300 rounded-2xl p-3">
               <p className="text-slate-600 text-sm font-bold mb-2 text-center">
                 多数派（市民）
               </p>
@@ -121,7 +125,7 @@ const Result = ({ players, votes, wolfIndices, wordPair, onPlayAgain, onNewWord 
                 {wordPair.majority}
               </p>
             </div>
-            <div className="bg-slate-100 border-2 border-slate-300 rounded-2xl p-4">
+            <div className="bg-slate-100 border-2 border-slate-300 rounded-2xl p-3">
               <p className="text-slate-600 text-sm font-bold mb-2 text-center">
                 少数派（ウルフ）
               </p>
@@ -135,14 +139,14 @@ const Result = ({ players, votes, wolfIndices, wordPair, onPlayAgain, onNewWord 
               カテゴリ: {wordPair.category}
             </span>
           </div>
-        </div>
+            </div>
 
-        {/* 役割公開 */}
-        <div className="mb-8">
-          <h3 className="text-xl font-bold text-slate-800 mb-4 text-center">
+            {/* 役割公開 */}
+            <div>
+          <h3 className="text-lg font-bold text-slate-800 mb-2 text-center">
             役割
           </h3>
-          <div className="grid grid-cols-2 sm:grid-cols-3 gap-3">
+          <div className="grid grid-cols-2 lg:grid-cols-2 gap-3">
             {players.map(player => {
               const isWolf = wolfIndices.includes(player.id);
               return (
@@ -164,28 +168,30 @@ const Result = ({ players, votes, wolfIndices, wordPair, onPlayAgain, onNewWord 
               );
             })}
           </div>
+            </div>
+          </div>
         </div>
 
         {/* アクションボタン */}
-        <div className="space-y-3">
+        <div className="space-y-2 mt-3 lg:mt-4 lg:grid lg:grid-cols-2 lg:gap-3 lg:space-y-0">
           <button
             onClick={onPlayAgain}
-            className="group relative w-full bg-gradient-to-r from-emerald-500 to-green-600 text-white font-bold py-4 px-6 rounded-2xl hover:from-emerald-600 hover:to-green-700 transition-all transform hover:scale-[1.02] active:scale-[0.98] shadow-lg shadow-emerald-500/30 text-lg overflow-hidden"
+            className="group relative w-full bg-gradient-to-r from-emerald-500 to-green-600 text-white font-bold py-3 px-6 rounded-2xl hover:from-emerald-600 hover:to-green-700 transition-all transform hover:scale-[1.02] active:scale-[0.98] shadow-lg shadow-emerald-500/30 text-base overflow-hidden"
           >
             <div className="absolute inset-0 bg-white/20 group-hover:translate-x-full transition-transform duration-500 ease-out -skew-x-12 -translate-x-full" />
             <span className="relative flex items-center justify-center gap-2">
-              <RotateCw size={20} />
+              <RotateCw size={18} />
               もう一度プレイ
             </span>
           </button>
 
           <button
             onClick={onNewWord}
-            className="group relative w-full bg-gradient-to-r from-indigo-600 to-purple-600 text-white font-bold py-4 px-6 rounded-2xl hover:from-indigo-700 hover:to-purple-700 transition-all transform hover:scale-[1.02] active:scale-[0.98] shadow-lg shadow-indigo-500/30 text-lg overflow-hidden"
+            className="group relative w-full bg-gradient-to-r from-indigo-600 to-purple-600 text-white font-bold py-3 px-6 rounded-2xl hover:from-indigo-700 hover:to-purple-700 transition-all transform hover:scale-[1.02] active:scale-[0.98] shadow-lg shadow-indigo-500/30 text-base overflow-hidden"
           >
             <div className="absolute inset-0 bg-white/20 group-hover:translate-x-full transition-transform duration-500 ease-out -skew-x-12 -translate-x-full" />
             <span className="relative flex items-center justify-center gap-2">
-              <Sparkles size={20} />
+              <Sparkles size={18} />
               新しいお題で
             </span>
           </button>

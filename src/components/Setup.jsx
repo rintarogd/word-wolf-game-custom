@@ -100,14 +100,14 @@ const Setup = ({ onStart, onManageWords }) => {
   return (
     <>
       <div className="min-h-screen bg-gradient-to-br from-indigo-600 via-purple-600 to-indigo-800 flex items-center justify-center p-4 font-sans text-slate-800">
-        <div className="w-full max-w-md bg-white/95 backdrop-blur-xl rounded-3xl shadow-2xl overflow-hidden border border-white/20">
+        <div className="w-full max-w-md lg:max-w-2xl bg-white/95 backdrop-blur-xl rounded-3xl shadow-2xl overflow-hidden border border-white/20">
             {/* ヘッダーエリア */}
             <div className="pt-8 pb-6 px-6 text-center bg-gradient-to-b from-indigo-50/50 to-transparent">
-              <h1 className="text-3xl font-extrabold text-transparent bg-clip-text bg-gradient-to-r from-indigo-600 to-purple-600 tracking-tight mb-2">
-                ワードウルフ
+              <h1 className="text-4xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-indigo-600 to-purple-600 mb-2" style={{ fontFamily: 'Georgia, "Times New Roman", Times, serif' }}>
+                Word Wolf
               </h1>
-              <p className="text-slate-500 text-sm font-medium">
-                みんなで楽しむ推理ゲーム
+              <p className="text-sm font-medium text-transparent bg-clip-text bg-gradient-to-r from-indigo-600 to-purple-600">
+                会話の駆け引きで狼を見つけ出せ
               </p>
             </div>
 
@@ -119,10 +119,12 @@ const Setup = ({ onStart, onManageWords }) => {
                 </div>
               )}
 
-              {/* 設定カード: 人数 */}
+              {/* 設定カード */}
               <div className="space-y-6">
-                {/* プレイヤー人数 */}
-                <div className="bg-slate-50 rounded-2xl p-4 border border-slate-100 shadow-sm">
+                {/* プレイヤー人数とウルフ人数 - 横並び */}
+                <div className="grid grid-cols-1 lg:grid-cols-2 gap-4">
+                  {/* プレイヤー人数 */}
+                  <div className="bg-slate-50 rounded-2xl p-4 border border-slate-100 shadow-sm">
                   <div className="flex justify-between items-center mb-4">
                     <label className="text-sm font-bold text-slate-700 flex items-center gap-2">
                       <Users className="text-indigo-500" size={18} />
@@ -153,10 +155,10 @@ const Setup = ({ onStart, onManageWords }) => {
                       +
                     </button>
                   </div>
-                </div>
+                  </div>
 
-                {/* ウルフ人数 */}
-                <div className="bg-slate-50 rounded-2xl p-4 border border-slate-100 shadow-sm">
+                  {/* ウルフ人数 */}
+                  <div className="bg-slate-50 rounded-2xl p-4 border border-slate-100 shadow-sm">
                   <div className="flex justify-between items-center mb-4">
                     <label className="text-sm font-bold text-slate-700 flex items-center gap-2">
                       <User className="text-pink-500" size={18} />
@@ -187,43 +189,44 @@ const Setup = ({ onStart, onManageWords }) => {
                       +
                     </button>
                   </div>
+                  </div>
                 </div>
-              </div>
 
-              {/* 難易度設定 */}
-              <div className="space-y-3">
-                <label className="text-sm font-bold text-slate-700 pl-1">難易度</label>
-                <div className="grid grid-cols-3 gap-2 bg-slate-100 p-1.5 rounded-2xl">
-                  {difficulties.map((d) => (
-                    <button
-                      key={d.id}
-                      onClick={() => setDifficulty(d.id)}
-                      className={`
-                        relative flex flex-col items-center justify-center py-3 rounded-xl text-sm font-bold transition-all duration-200
-                        ${difficulty === d.id
-                          ? 'bg-white shadow-md text-slate-800 scale-100'
-                          : 'text-slate-400 hover:text-slate-600 hover:bg-slate-200/50 scale-95'}
-                      `}
-                    >
-                      <span className={`mb-1 transition-colors ${difficulty === d.id ? d.text : ''}`}>
-                        {d.icon}
-                      </span>
-                      {d.label}
+                {/* 難易度設定 - その下に配置 */}
+                <div className="space-y-3">
+                  <label className="text-sm font-bold text-slate-700 pl-1">難易度</label>
+                  <div className="grid grid-cols-3 gap-2 bg-slate-100 p-1.5 rounded-2xl">
+                    {difficulties.map((d) => (
+                      <button
+                        key={d.id}
+                        onClick={() => setDifficulty(d.id)}
+                        className={`
+                          relative flex flex-col items-center justify-center py-3 rounded-xl text-sm font-bold transition-all duration-200
+                          ${difficulty === d.id
+                            ? 'bg-white shadow-md text-slate-800 scale-100'
+                            : 'text-slate-400 hover:text-slate-600 hover:bg-slate-200/50 scale-95'}
+                        `}
+                      >
+                        <span className={`mb-1 transition-colors ${difficulty === d.id ? d.text : ''}`}>
+                          {d.icon}
+                        </span>
+                        {d.label}
 
-                      {/* アクティブ時のインジケーター */}
-                      {difficulty === d.id && (
-                        <span className={`absolute inset-0 rounded-xl ring-2 ${d.ring}`} />
-                      )}
-                    </button>
-                  ))}
+                        {/* アクティブ時のインジケーター */}
+                        {difficulty === d.id && (
+                          <span className={`absolute inset-0 rounded-xl ring-2 ${d.ring}`} />
+                        )}
+                      </button>
+                    ))}
+                  </div>
+                  <p className="text-center text-xs text-slate-400 font-medium pt-1">
+                    お題の抽象度が変わります
+                  </p>
                 </div>
-                <p className="text-center text-xs text-slate-400 font-medium pt-1">
-                  お題の抽象度が変わります
-                </p>
               </div>
 
               {/* メインアクション */}
-              <div className="space-y-4 pt-2">
+              <div className="grid lg:grid-cols-2 gap-4 pt-2">
                 <button
                   onClick={validateAndStart}
                   className="group relative w-full py-4 bg-gradient-to-r from-indigo-600 to-purple-600 rounded-2xl text-white font-bold text-lg shadow-lg shadow-indigo-500/30 overflow-hidden transform transition-all hover:scale-[1.02] active:scale-[0.98]"

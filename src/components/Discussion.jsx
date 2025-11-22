@@ -1,9 +1,10 @@
 import { useState, useEffect, useCallback } from 'react';
-import { Play, Pause, ArrowRight, Timer, Lightbulb } from 'lucide-react';
+import { Play, Pause, ArrowRight, Timer, Lightbulb, ChevronDown } from 'lucide-react';
 
 const Discussion = ({ initialTime, onFinish }) => {
   const [timeLeft, setTimeLeft] = useState(initialTime);
   const [isPaused, setIsPaused] = useState(false);
+  const [showTips, setShowTips] = useState(false);
 
   // タイマー処理
   useEffect(() => {
@@ -141,27 +142,70 @@ const Discussion = ({ initialTime, onFinish }) => {
           </button>
         </div>
 
-        {/* ヒント */}
+        {/* ヒント（アコーディオン） */}
         <div className="mt-8 pt-6 border-t border-slate-200">
-          <h3 className="font-bold text-slate-800 mb-3 flex items-center gap-2">
-            <Lightbulb size={18} className="text-amber-500" />
-            討論のコツ
-          </h3>
-          <ul className="text-sm text-slate-600 space-y-2">
-            <li className="flex items-start gap-2">
-              <span className="text-indigo-500 font-bold">•</span>
-              <span>お題の特徴について話し合いましょう</span>
-            </li>
-            <li className="flex items-start gap-2">
-              <span className="text-indigo-500 font-bold">•</span>
-              <span>違和感のある発言に注目しましょう</span>
-            </li>
-            <li className="flex items-start gap-2">
-              <span className="text-indigo-500 font-bold">•</span>
-              <span>質問で相手の情報を引き出しましょう</span>
-            </li>
-          </ul>
+          <button
+            onClick={() => setShowTips(!showTips)}
+            className="w-full flex items-center justify-between text-left font-bold text-slate-800 hover:text-indigo-600 transition-colors"
+          >
+            <span className="flex items-center gap-2">
+              <Lightbulb size={18} className="text-amber-500" />
+              討論のコツ
+            </span>
+            <ChevronDown
+              size={20}
+              className={`transform transition-transform duration-200 ${showTips ? 'rotate-180' : ''}`}
+            />
+          </button>
+
+          {showTips && (
+            <div className="mt-4 space-y-4 animate-fade-in">
+              {/* 質問の例 */}
+              <div className="bg-gradient-to-r from-blue-50 to-cyan-50 border-l-4 border-blue-400 rounded-r-xl p-4">
+                <h4 className="font-bold text-blue-800 mb-2 text-sm">💬 質問の例</h4>
+                <ul className="text-xs text-blue-700 space-y-1">
+                  <li>• 「温かいですか？冷たいですか?」</li>
+                  <li>• 「屋内で使いますか？屋外で使いますか？」</li>
+                  <li>• 「食べられますか？」</li>
+                  <li>• 「何色ですか？」</li>
+                  <li>• 「大きさはどれくらいですか？」</li>
+                </ul>
+              </div>
+
+              {/* 観察のヒント */}
+              <div className="bg-gradient-to-r from-amber-50 to-yellow-50 border-l-4 border-amber-400 rounded-r-xl p-4">
+                <h4 className="font-bold text-amber-800 mb-2 text-sm">👀 観察のヒント</h4>
+                <ul className="text-xs text-amber-700 space-y-1">
+                  <li>• 曖昧な答えをする人に注目</li>
+                  <li>• 他の人と違う説明をしている人を探す</li>
+                  <li>• 質問に詰まったり、考え込む人をチェック</li>
+                  <li>• 質問を避けたり、話題を変える人に注意</li>
+                </ul>
+              </div>
+
+              {/* 戦略 */}
+              <div className="bg-gradient-to-r from-purple-50 to-pink-50 border-l-4 border-purple-400 rounded-r-xl p-4">
+                <h4 className="font-bold text-purple-800 mb-2 text-sm">🎯 戦略</h4>
+                <ul className="text-xs text-purple-700 space-y-1">
+                  <li>• <strong>市民:</strong> 具体的な特徴を確認し合う</li>
+                  <li>• <strong>ウルフ:</strong> 多数派のお題を推測しながら話す</li>
+                  <li>• <strong>全員:</strong> 自分のお題がバレないよう上手く話す</li>
+                  <li>• 最初は広い質問から、徐々に絞り込む</li>
+                </ul>
+              </div>
+            </div>
+          )}
         </div>
+
+        <style>{`
+          @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(-10px); }
+            to { opacity: 1; transform: translateY(0); }
+          }
+          .animate-fade-in {
+            animation: fadeIn 0.3s ease-out forwards;
+          }
+        `}</style>
       </div>
     </div>
   );

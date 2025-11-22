@@ -24,14 +24,6 @@ const Vote = ({ players, votes, onVote }) => {
     }
   };
 
-  // 投票をスキップ（次のプレイヤーへ）
-  const skipVote = () => {
-    if (currentVoterId < players.length - 1) {
-      setCurrentVoterId(currentVoterId + 1);
-      setSelectedSuspect(null);
-    }
-  };
-
   // 全員が投票済みかどうか
   const allVoted = Object.keys(votes).length === players.length;
 
@@ -82,7 +74,7 @@ const Vote = ({ players, votes, onVote }) => {
                     key={player.id}
                     onClick={() => !isCurrentVoter && setSelectedSuspect(player.id)}
                     disabled={isCurrentVoter}
-                    className={`p-4 rounded-2xl font-medium transition-all transform ${
+                    className={`p-4 rounded-2xl font-medium transition-all transform min-h-[72px] flex flex-col items-center justify-center ${
                       isCurrentVoter
                         ? 'bg-slate-200 text-slate-400 cursor-not-allowed'
                         : isSelected
@@ -91,41 +83,32 @@ const Vote = ({ players, votes, onVote }) => {
                     }`}
                   >
                     <div className="text-lg">{player.name}</div>
-                    {isCurrentVoter && (
-                      <div className="text-xs mt-1">（あなた）</div>
-                    )}
+                    <div className="text-xs mt-1 h-4">
+                      {isCurrentVoter && '（あなた）'}
+                    </div>
                   </button>
                 );
               })}
             </div>
 
             {/* 投票ボタン */}
-            <div className="space-y-2">
-              <button
-                onClick={submitVote}
-                disabled={selectedSuspect === null}
-                className={`group relative w-full font-bold py-4 px-6 rounded-2xl transition-all transform shadow-lg text-lg overflow-hidden ${
-                  selectedSuspect === null
-                    ? 'bg-slate-300 text-slate-500 cursor-not-allowed'
-                    : 'bg-gradient-to-r from-rose-500 to-pink-600 text-white hover:from-rose-600 hover:to-pink-700 hover:scale-[1.02] active:scale-[0.98] shadow-rose-500/30'
-                }`}
-              >
-                {selectedSuspect !== null && (
-                  <div className="absolute inset-0 bg-white/20 group-hover:translate-x-full transition-transform duration-500 ease-out -skew-x-12 -translate-x-full" />
-                )}
-                <span className="relative flex items-center justify-center gap-2">
-                  <CheckCircle size={20} />
-                  この人に投票する
-                </span>
-              </button>
-
-              <button
-                onClick={skipVote}
-                className="w-full bg-slate-200 text-slate-700 font-medium py-3 px-4 rounded-2xl hover:bg-slate-300 transition-colors text-sm"
-              >
-                後で投票する（スキップ）
-              </button>
-            </div>
+            <button
+              onClick={submitVote}
+              disabled={selectedSuspect === null}
+              className={`group relative w-full font-bold py-4 px-6 rounded-2xl transition-all transform shadow-lg text-lg overflow-hidden ${
+                selectedSuspect === null
+                  ? 'bg-slate-300 text-slate-500 cursor-not-allowed'
+                  : 'bg-gradient-to-r from-rose-500 to-pink-600 text-white hover:from-rose-600 hover:to-pink-700 hover:scale-[1.02] active:scale-[0.98] shadow-rose-500/30'
+              }`}
+            >
+              {selectedSuspect !== null && (
+                <div className="absolute inset-0 bg-white/20 group-hover:translate-x-full transition-transform duration-500 ease-out -skew-x-12 -translate-x-full" />
+              )}
+              <span className="relative flex items-center justify-center gap-2">
+                <CheckCircle size={20} />
+                この人に投票する
+              </span>
+            </button>
           </div>
         ) : (
           <div className="text-center space-y-6">
