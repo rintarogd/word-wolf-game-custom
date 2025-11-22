@@ -152,14 +152,6 @@ const Setup = ({ onStart, onManageWords }) => {
           >
             ゲーム開始
           </button>
-
-          {/* お題管理ボタン */}
-          <button
-            onClick={onManageWords}
-            className="w-full bg-gray-200 text-gray-700 font-medium py-3 px-6 rounded-lg hover:bg-gray-300 transition-all"
-          >
-            ⚙️ お題を管理
-          </button>
         </div>
 
         {/* ゲームルール */}
@@ -171,6 +163,14 @@ const Setup = ({ onStart, onManageWords }) => {
             <li>• 投票でウルフを当てられれば市民の勝利です</li>
           </ul>
         </div>
+
+        {/* お題管理ボタン */}
+        <button
+          onClick={onManageWords}
+          className="w-full mt-4 bg-gray-200 text-gray-700 font-medium py-3 px-6 rounded-lg hover:bg-gray-300 transition-all"
+        >
+          ⚙️ お題を管理
+        </button>
       </div>
     </div>
   );
