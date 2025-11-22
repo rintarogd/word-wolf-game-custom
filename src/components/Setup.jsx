@@ -199,38 +199,6 @@ const Setup = ({ onStart, onManageWords }) => {
                   </div>
                 </div>
 
-                {/* 難易度設定 - その下に配置 */}
-                <div className="space-y-3">
-                  <label className="text-sm font-bold text-slate-700 pl-1">難易度</label>
-                  <div className="grid grid-cols-3 gap-2 bg-slate-100 p-1.5 rounded-2xl">
-                    {difficulties.map((d) => (
-                      <button
-                        key={d.id}
-                        onClick={() => setDifficulty(d.id)}
-                        className={`
-                          relative flex flex-col items-center justify-center py-3 rounded-xl text-sm font-bold transition-all duration-200
-                          ${difficulty === d.id
-                            ? 'bg-white shadow-md text-slate-800 scale-100'
-                            : 'text-slate-400 hover:text-slate-600 hover:bg-slate-200/50 scale-95'}
-                        `}
-                      >
-                        <span className={`mb-1 transition-colors ${difficulty === d.id ? d.text : ''}`}>
-                          {d.icon}
-                        </span>
-                        {d.label}
-
-                        {/* アクティブ時のインジケーター */}
-                        {difficulty === d.id && (
-                          <span className={`absolute inset-0 rounded-xl ring-2 ${d.ring}`} />
-                        )}
-                      </button>
-                    ))}
-                  </div>
-                  <p className="text-center text-xs text-slate-400 font-medium pt-1">
-                    お題の抽象度が変わります
-                  </p>
-                </div>
-
                 {/* お題セット選択 */}
                 <div className="space-y-3">
                   <label className="text-sm font-bold text-slate-700 pl-1">お題セット</label>
@@ -264,6 +232,38 @@ const Setup = ({ onStart, onManageWords }) => {
                       </button>
                     ))}
                   </div>
+                </div>
+
+                {/* 難易度設定 */}
+                <div className="space-y-3">
+                  <label className="text-sm font-bold text-slate-700 pl-1">難易度</label>
+                  <div className="grid grid-cols-3 gap-2 bg-slate-100 p-1.5 rounded-2xl">
+                    {difficulties.map((d) => (
+                      <button
+                        key={d.id}
+                        onClick={() => setDifficulty(d.id)}
+                        className={`
+                          relative flex flex-col items-center justify-center py-3 rounded-xl text-sm font-bold transition-all duration-200
+                          ${difficulty === d.id
+                            ? 'bg-white shadow-md text-slate-800 scale-100'
+                            : 'text-slate-400 hover:text-slate-600 hover:bg-slate-200/50 scale-95'}
+                        `}
+                      >
+                        <span className={`mb-1 transition-colors ${difficulty === d.id ? d.text : ''}`}>
+                          {d.icon}
+                        </span>
+                        {d.label}
+
+                        {/* アクティブ時のインジケーター */}
+                        {difficulty === d.id && (
+                          <span className={`absolute inset-0 rounded-xl ring-2 ${d.ring}`} />
+                        )}
+                      </button>
+                    ))}
+                  </div>
+                  <p className="text-center text-xs text-slate-400 font-medium pt-1">
+                    お題の抽象度が変わります
+                  </p>
                 </div>
               </div>
 

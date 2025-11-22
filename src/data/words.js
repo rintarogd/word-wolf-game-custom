@@ -11,6 +11,8 @@ const homeWordPairs = [
   { id: 8, majority: "山", minority: "海", category: "自然", difficulty: "easy" },
   { id: 9, majority: "朝", minority: "夜", category: "時間", difficulty: "easy" },
   { id: 10, majority: "春", minority: "秋", category: "季節", difficulty: "easy" },
+  { id: 25, majority: "カレー", minority: "ハンバーグ", category: "食べ物", difficulty: "easy" },
+  { id: 26, majority: "パン", minority: "ごはん", category: "食べ物", difficulty: "easy" },
 
   // 普通
   { id: 11, majority: "札幌", minority: "仙台", category: "県庁所在地", difficulty: "medium" },
@@ -21,6 +23,8 @@ const homeWordPairs = [
   { id: 16, majority: "ピアノ", minority: "ギター", category: "楽器", difficulty: "medium" },
   { id: 17, majority: "バスケットボール", minority: "バレーボール", category: "スポーツ", difficulty: "medium" },
   { id: 18, majority: "図書館", minority: "本屋", category: "本の場所", difficulty: "medium" },
+  { id: 27, majority: "すし", minority: "天ぷら", category: "食べ物", difficulty: "medium" },
+  { id: 28, majority: "ドラム", minority: "トランペット", category: "楽器", difficulty: "medium" },
 
   // 難しい
   { id: 19, majority: "北海道", minority: "沖縄", category: "都道府県", difficulty: "hard" },
@@ -29,6 +33,8 @@ const homeWordPairs = [
   { id: 22, majority: "信濃川", minority: "利根川", category: "川", difficulty: "hard" },
   { id: 23, majority: "テニス", minority: "バドミントン", category: "スポーツ", difficulty: "hard" },
   { id: 24, majority: "マラソン", minority: "駅伝", category: "陸上競技", difficulty: "hard" },
+  { id: 29, majority: "オーケストラ", minority: "吹奏楽", category: "楽器", difficulty: "hard" },
+  { id: 30, majority: "和食", minority: "中華料理", category: "食べ物", difficulty: "hard" },
 ];
 
 // Business セット（新規事業・スタートアップ向け）
