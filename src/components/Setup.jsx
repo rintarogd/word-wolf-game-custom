@@ -111,7 +111,7 @@ const Setup = ({ onStart, onManageWords }) => {
             {/* ヘッダーエリア */}
             <div className="pt-8 pb-6 px-6 text-center bg-gradient-to-b from-muted-indigo-50/50 to-transparent">
               <h1 className="text-4xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-muted-indigo-600 to-muted-purple-600 mb-2" style={{ fontFamily: 'Georgia, "Times New Roman", Times, serif' }}>
-                Word Wolf
+                KEYWORD WOLF
               </h1>
               <p className="text-sm font-medium text-transparent bg-clip-text bg-gradient-to-r from-muted-indigo-600 to-muted-purple-600">
                 会話の駆け引きで狼を見つけ出せ
