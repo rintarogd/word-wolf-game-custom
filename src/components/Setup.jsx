@@ -302,10 +302,10 @@ const Setup = ({ onStart, onManageWords }) => {
                 <div className="px-6 py-4 bg-slate-100/50 text-sm text-slate-600 leading-relaxed space-y-4 animate-fade-in">
                   <div>
                     <h3 className="font-bold text-muted-indigo-600 mb-1 flex items-center gap-2">
-                      ワードウルフとは
+                      KEYWORD WOLFとは
                     </h3>
                     <p className="text-xs leading-5">
-                      全員に話すテーマ（お題）が与えられますが、一人だけ異なるお題を与えられた人がいます。この異なるお題を与えられた少数派を「ワードウルフ」と呼びます。
+                      全員に話すテーマ（お題）が与えられますが、一人だけ異なるお題を与えられた人がいます。この異なるお題を与えられた少数派を「KEYWORD WOLF」と呼びます。
                     </p>
                   </div>
 
@@ -313,14 +313,14 @@ const Setup = ({ onStart, onManageWords }) => {
                     <h3 className="font-bold text-muted-indigo-600 mb-1 text-xs flex items-center gap-1">
                       <Users size={14} /> 多数派（市民）の目的
                     </h3>
-                    <p className="text-xs">会話を通じてワードウルフを見つけ出し、投票で特定することが目標です。</p>
+                    <p className="text-xs">会話を通じてKEYWORD WOLFを見つけ出し、投票で特定することが目標です。</p>
                   </div>
 
                   <div className="bg-white p-3 rounded-lg border border-slate-200">
                     <h3 className="font-bold text-crimson-500 mb-1 text-xs flex items-center gap-1">
-                      <User size={14} /> 少数派（ワードウルフ）の目的
+                      <User size={14} /> 少数派（KEYWORD WOLF）の目的
                     </h3>
-                    <p className="text-xs">会話の流れで自分がワードウルフだと気づいたら、他のプレイヤーに合わせて会話をし、正体がばれないように立ち回ります。投票で自分への投票を回避できれば勝利です。</p>
+                    <p className="text-xs">会話の流れで自分がKEYWORD WOLFだと気づいたら、他のプレイヤーに合わせて会話をし、正体がばれないように立ち回ります。投票で自分への投票を回避できれば勝利です。</p>
                   </div>
 
                   <div>
